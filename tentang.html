@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tentang Saya</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-trail"></div>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jasa.html">Jasa Freelance</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- PROFIL -->
+    <section class="profile">
+        <div class="profile-img">
+            <img src="asep.jpeg" alt="Asep Awaludin">
+        </div>
+
+        <div class="profile-info">
+            <h1>Asep Awaludin</h1>
+            <h3>Freelance Graphic Designer</h3>
+            <p>
+                Saya adalah seorang freelance graphic designer yang terbiasa mengerjakan
+                desain logo, poster, banner, CV, dan konten media sosial.
+                Terbiasa bekerja mandiri, disiplin, dan bertanggung jawab terhadap deadline.
+            </p>
+        </div>
+    </section>
+
+    <!-- BIODATA -->
+    <section class="card">
+        <h2>Biodata Singkat</h2>
+        <ul class="list">
+            <li><strong>Nama:</strong> Asep Awaludin</li>
+            <li><strong>Alamat:</strong> Dusun Cijeruk, Dayeuhluhur, Cilacap, Jawa Tengah</li>
+            <li><strong>No. HP / WA:</strong> 0877-3881-3613</li>
+            <li><strong>Email:</strong> asepkreatif14@gmail.com</li>
+        </ul>
+    </section>
+
+    <!-- KEBIASAAN & HOBI -->
+    <section class="card">
+        <h2>Kebiasaan & Hobi</h2>
+        <ul class="list">
+            <li>Mendesain di waktu luang</li>
+            <li>Mencari referensi desain di internet</li>
+            <li>Belajar tools desain terbaru</li>
+            <li>Mendengarkan musik saat bekerja</li>
+        </ul>
+    </section>
+
+    <!-- KEAHLIAN -->
+    <section class="card">
+        <h2>Keahlian</h2>
+        <ul class="list">
+            <li>Adobe Photoshop</li>
+            <li>Adobe Illustrator</li>
+            <li>CorelDRAW</li>
+            <li>Canva</li>
+            <li>Desain Logo & Branding</li>
+            <li>Desain CV Profesional</li>
+        </ul>
+    </section>
+
+    <!-- PENGALAMAN KERJA -->
+    <section class="card">
+        <h2>Pengalaman Kerja</h2>
+        <p>
+            <strong>Freelance Graphic Designer</strong> <br>
+            AMcjr7 Design Grafis (2021 – Sekarang)
+        </p>
+        <ul class="list">
+            <li>Melayani klien UMKM dan individu</li>
+            <li>Mengerjakan desain logo, poster, banner, CV</li>
+            <li>Fast respon dan komunikasi via WhatsApp</li>
+            <li>Menyelesaikan pekerjaan sesuai deadline</li>
+        </ul>
+    </section>
+
+</div>
+
+<footer>
+    <p>© 2025 Asep Awaludin</p>
+    <div class="marquee">
+        <span>Profesional • Elegan • Terpercaya •</span>
+    </div>
+</footer>
+
+</body>
+    <script>
+const cursor = document.querySelector('.cursor');
+const trail = document.querySelector('.cursor-trail');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    trail.animate({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+    }, { duration: 120, fill: "forwards" });
+});
+</script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kontak</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-trail"></div>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jasa.html">Jasa Freelance</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="panel" id="contactus">
+        <h1>Kontak Saya</h1>
+
+        <div class="contact-wrapper">
+
+            <!-- FORM -->
+            <div class="contact-col">
+                <div id="contact_form">
+                    <form method="post" name="contact" action="admin.php">
+                        <label for="author">Name</label>
+                        <input type="text" id="author" name="author" class="input_field" required>
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="input_field" required>
+
+                        <label for="text">Message</label>
+                        <textarea id="text" name="text" class="input_field textarea" required></textarea>
+
+                        <div class="btn-group">
+                            <input type="submit" class="submit_button primary" value="Send">
+                            <input type="reset" class="submit_button secondary" value="Reset">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ALAMAT -->
+            <div class="contact-col">
+                <h4>Alamat Saya</h4>
+                <p>
+                    RT 002 RW 002 – Dusun Cijeruk – 53266<br>
+                    Desa Cijeruk – Kecamatan Dayeuhluhur<br>
+                    Kab. Cilacap – Jawa Tengah<br>
+                    Indonesia
+                </p>
+
+                <p class="contact-info">
+                    📞 Tel : 0877-3881-3613<br>
+                    💬 WA : 0877-3881-3613
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Asep Awaludin</p>
+    <div class="marquee">
+        <span>Silakan hubungi saya kapan saja • Terima kasih •</span>
+    </div>
+</footer>
+
+</body>
+    <script>
+const cursor = document.querySelector('.cursor');
+const trail = document.querySelector('.cursor-trail');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    trail.animate({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+    }, { duration: 120, fill: "forwards" });
+});
+</script>
+</html>

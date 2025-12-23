@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketentuan Warna Latar Belakang Pas Foto - Indonesia</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --white-color: #ffffff;
+            --red-color: #e74c3c;
+            --blue-color: #3498db;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .search-container {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .color-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .color-filter {
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .color-filter.active {
+            transform: scale(1.05);
+            font-weight: bold;
+        }
+        
+        .color-filter.red {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--red-color);
+            border-color: var(--red-color);
+        }
+        
+        .color-filter.white {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #333;
+            border-color: #333;
+        }
+        
+        .color-filter.blue {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--blue-color);
+            border-color: var(--blue-color);
+        }
+        
+        .color-filter.mixed {
+            background-color: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+            border-color: #9b59b6;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+        
+        .document-card {
+            background-color: var(--white-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .document-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .document-number {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .document-body {
+            padding: 15px;
+        }
+        
+        .document-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .color-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .color-red {
+            background-color: var(--red-color);
+            color: white;
+        }
+        
+        .color-white {
+            background-color: var(--white-color);
+            color: #333;
+            border: 1px solid var(--border-color);
+        }
+        
+        .color-blue {
+            background-color: var(--blue-color);
+            color: white;
+        }
+        
+        .color-mixed {
+            background: linear-gradient(45deg, var(--red-color) 25%, var(--white-color) 25%, var(--white-color) 50%, var(--blue-color) 50%, var(--blue-color) 75%, var(--white-color) 75%);
+            color: #333;
+            border: 1px solid var(--border-color);
+        }
+        
+        .notes-section {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .notes-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--white-color);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        @media (max-width: 768px) {
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+nav ul {
+            display: flex;
+            justify-content: center; /* Menjaga menu agar berada di tengah */
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 auto; /* Jarak antar menu */
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-weight: bolder;
+            color: #fcfcfc;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #06ff06; /* Efek hover */
+        }
+                    
+    </style>
+</head>
+<body>
+<center>
+     <div class="cursor"></div>
+    <div class="cursor-trail"></div>
+    <div class="container">
+<header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jasa.html">Jasa Freelance</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+    </ul>
+</nav>
+</header>
+</center>
+    <header>
+        <div class="container">
+            <h1>Ketentuan Warna Latar Belakang Pas Foto</h1>
+            <p class="subtitle">Panduan lengkap untuk keperluan dokumen resmi di Indonesia</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cari dokumen (misalnya: KTP, SIM, Paspor...)">
+            <div class="color-filters">
+                <div class="color-filter active" data-color="all">Semua</div>
+                <div class="color-filter red" data-color="red">Merah</div>
+                <div class="color-filter white" data-color="white">Putih</div>
+                <div class="color-filter blue" data-color="blue">Biru</div>
+                <div class="color-filter mixed" data-color="mixed">Campuran</div>
+            </div>
+        </div>
+        
+        <div class="documents-grid" id="documentsContainer">
+            <!-- Dokumen akan dimasukkan di sini melalui JavaScript -->
+        </div>
+        
+        <div class="notes-section">
+            <h2>Catatan Penting</h2>
+            <p><strong>Ukuran Foto:</strong> Pastikan untuk memeriksa persyaratan mengenai ukuran foto untuk setiap dokumen. Biasanya, ukuran standar untuk pas foto adalah 3x4 cm atau 4x6 cm.</p>
+            <p><strong>Kualitas Foto:</strong> Foto yang digunakan harus jelas, terang, dan tidak buram, dengan wajah yang terlihat jelas tanpa aksesori yang menutupi bagian wajah.</p>
+            <p>Jika Anda sedang mengurus dokumen tertentu dan ingin tahu lebih detail, silakan hubungi instansi terkait untuk informasi terbaru.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Panduan Pas Foto Indonesia. Informasi ini dapat berubah sewaktu-waktu.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data dokumen
+        const documents = [
+            { id: 1, name: "KTP (Kartu Tanda Penduduk)", color: "red", description: "Foto KTP elektronik (e-KTP) harus menggunakan latar belakang merah sesuai ketentuan pemerintah." },
+            { id: 2, name: "Akta Nikah", color: "white", description: "Pas foto untuk akta nikah umumnya menggunakan latar belakang putih." },
+            { id: 3, name: "Paspor", color: "white", description: "Paspor memerlukan foto dengan latar belakang putih untuk keperluan administrasi imigrasi." },
+            { id: 4, name: "SIM (Surat Izin Mengemudi)", color: "red", description: "Pas foto untuk SIM baru biasanya memiliki latar belakang merah." },
+            { id: 5, name: "Surat Keterangan Lahir / Akta Kelahiran", color: "white", description: "Foto untuk akta kelahiran umumnya menggunakan latar belakang putih." },
+            { id: 6, name: "Izin Tinggal / Visa", color: "mixed", description: "Beberapa negara atau lembaga imigrasi menetapkan latar belakang putih atau biru untuk pas foto visa atau izin tinggal." },
+            { id: 7, name: "Surat Permohonan Beasiswa / CV", color: "white", description: "Untuk dokumen administratif seperti beasiswa atau CV, latar belakang pas foto biasanya putih." },
+            { id: 8, name: "BPJS Kesehatan", color: "white", description: "BPJS Kesehatan memerlukan pas foto dengan latar belakang putih." },
+            { id: 9, name: "Kartu Tanda Anak (KTA)", color: "white", description: "Pas foto untuk KTA umumnya dengan latar belakang putih." },
+            { id: 10, name: "Kartu Keluarga (KK)", color: "white", description: "Untuk keperluan Kartu Keluarga, jika pas foto diperlukan, latar belakangnya umumnya putih." },
+            { id: 11, name: "Surat Izin Usaha (SIUP)", color: "white", description: "Pas foto untuk SIUP menggunakan latar belakang putih." },
+            { id: 12, name: "NPWP (Nomor Pokok Wajib Pajak)", color: "white", description: "Untuk dokumen NPWP, pas foto umumnya menggunakan latar belakang putih." },
+            { id: 13, name: "Tanda Pengenal Pekerja (Kartu Pekerja)", color: "mixed", description: "Beberapa perusahaan menggunakan latar belakang putih atau biru untuk pas foto Kartu Pekerja." },
+            { id: 14, name: "Kartu Pelajar (Kartu Identitas Siswa)", color: "mixed", description: "Beberapa sekolah atau institusi pendidikan mengharuskan pas foto dengan latar belakang merah atau putih." },
+            { id: 15, name: "Kartu Pegawai Negeri Sipil (PNS)", color: "mixed", description: "Pas foto untuk Kartu PNS biasanya menggunakan latar belakang merah atau putih." },
+            { id: 16, name: "Kartu Kesehatan", color: "white", description: "Kartu kesehatan sering memerlukan pas foto dengan latar belakang putih." },
+            { id: 17, name: "Surat Keterangan Sehat", color: "white", description: "Foto untuk surat keterangan sehat umumnya menggunakan latar belakang putih." },
+            { id: 18, name: "Kartu BPJS Ketenagakerjaan atau Kesehatan", color: "white", description: "BPJS Ketenagakerjaan dan BPJS Kesehatan memerlukan pas foto dengan latar belakang putih." },
+            { id: 19, name: "Visa Kerja (untuk Beberapa Negara)", color: "mixed", description: "Beberapa negara, seperti Amerika Serikat, menetapkan latar belakang putih atau biru untuk visa kerja." },
+            { id: 20, name: "Kartu Kredit / Debit", color: "white", description: "Untuk pengajuan kartu kredit atau debit, latar belakang pas foto biasanya putih, meskipun banyak bank yang tidak memerlukannya." },
+            { id: 21, name: "Surat Rekomendasi / Surat Pengantar dari Institusi", color: "white", description: "Surat rekomendasi atau surat pengantar dari institusi biasanya memerlukan pas foto dengan latar belakang putih." },
+            { id: 22, name: "Surat Izin Belajar / Izin Studi", color: "white", description: "Izin studi atau izin belajar untuk dokumen administrasi pendidikan umumnya menggunakan latar belakang putih." },
+            { id: 23, name: "Kartu Identitas Mahasiswa", color: "mixed", description: "Beberapa universitas mengharuskan pas foto dengan latar belakang merah atau putih untuk Kartu Identitas Mahasiswa." },
+            { id: 24, name: "Kartu Vaksin (Misalnya, untuk COVID-19)", color: "white", description: "Kartu vaksinasi untuk COVID-19 biasanya menggunakan pas foto dengan latar belakang putih jika diperlukan." },
+            { id: 25, name: "Surat Izin Organisasi", color: "white", description: "Pas foto untuk izin organisasi atau kartu anggota organisasi biasanya dengan latar belakang putih." },
+            { id: 26, name: "Izin Lingkungan atau Izin Usaha", color: "white", description: "Untuk perizinan bisnis atau izin lingkungan, pas foto yang diperlukan umumnya menggunakan latar belakang putih." },
+            { id: 27, name: "Kartu Pencari Kerja (Kartu AK-1)", color: "white", description: "Pas foto untuk Kartu Pencari Kerja biasanya menggunakan latar belakang putih." },
+            { id: 28, name: "Kartu Indonesia Sehat (KIS)", color: "white", description: "Kartu Indonesia Sehat (KIS) untuk BPJS umumnya memerlukan pas foto dengan latar belakang putih." }
+        ];
+
+        // Fungsi untuk menampilkan dokumen
+        function displayDocuments(docs) {
+            const container = document.getElementById('documentsContainer');
+            
+            if (docs.length === 0) {
+                container.innerHTML = '<div class="no-results"><p>Tidak ada dokumen yang sesuai dengan pencarian Anda.</p></div>';
+                return;
+            }
+            
+            container.innerHTML = docs.map(doc => `
+                <div class="document-card" data-color="${doc.color}">
+                    <div class="document-header">
+                        <h3 class="document-title">${doc.name}</h3>
+                        <div class="document-number">${doc.id}</div>
+                    </div>
+                    <div class="document-body">
+                        <p>${doc.description}</p>
+                        <div class="color-indicator ${doc.color === 'mixed' ? 'color-mixed' : `color-${doc.color}`}">
+                            ${doc.color === 'red' ? 'Merah' : 
+                              doc.color === 'white' ? 'Putih' : 
+                              doc.color === 'blue' ? 'Biru' : 'Putih/Biru/Merah'}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fungsi untuk memfilter dokumen
+        function filterDocuments() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeColor = document.querySelector('.color-filter.active').dataset.color;
+            
+            let filteredDocs = documents;
+            
+            // Filter berdasarkan pencarian
+            if (searchTerm) {
+                filteredDocs = filteredDocs.filter(doc => 
+                    doc.name.toLowerCase().includes(searchTerm) || 
+                    doc.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Filter berdasarkan warna
+            if (activeColor !== 'all') {
+                filteredDocs = filteredDocs.filter(doc => doc.color === activeColor);
+            }
+            
+            displayDocuments(filteredDocs);
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            displayDocuments(documents);
+            
+            // Event listener untuk pencarian
+            document.getElementById('searchInput').addEventListener('input', filterDocuments);
+            
+            // Event listener untuk filter warna
+            document.querySelectorAll('.color-filter').forEach(filter => {
+                filter.addEventListener('click', function() {
+                    document.querySelectorAll('.color-filter').forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    filterDocuments();
+                });
+            });
+        });
+    </script>
+</body>
+
+    <script>
+const cursor = document.querySelector('.cursor');
+const trail = document.querySelector('.cursor-trail');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    trail.animate({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+    }, { duration: 120, fill: "forwards" });
+});
+</script>
+</html>

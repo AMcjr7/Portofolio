@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Asep Awaludin</title>
+
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor"></div>
+<div class="cursor-trail"></div>
+
+<!-- NAVBAR -->
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jasa.html">Jasa Freelance</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+    <h1 style="text-align:center; color:var(--accent); margin-bottom:20px;">
+        Selamat Datang
+    </h1>
+
+    <p class="center" style="text-align:center; color:var(--text-muted); font-size:16px;">
+        Ini adalah website pribadi & portofolio saya.<br>
+        Digunakan sebagai CV online, jasa freelance, dan profil profesional.
+    </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 Asep Awaludin</p>
+    <div class="marquee">
+        <span>
+            Portofolio & CV Online • Freelance Graphic Designer • Fast Respon WhatsApp •
+        </span>
+    </div>
+</footer>
+
+<!-- JS GLOBAL -->
+
+
+</body>
+    <script>
+const cursor = document.querySelector('.cursor');
+const trail = document.querySelector('.cursor-trail');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    trail.animate({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+    }, { duration: 120, fill: "forwards" });
+});
+</script>
+</html>
