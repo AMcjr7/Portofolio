@@ -26,7 +26,7 @@
             <!-- FORM -->
             <div class="contact-col">
                 <div id="contact_form">
-                    <form id="contactForm" name="contact">
+                        <form method="post" action="https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec">
                     <label for="author">Name</label>
                         <input type="text" id="author" name="author" class="input_field" required>
 
@@ -86,29 +86,9 @@ document.addEventListener('mousemove', e => {
     }, { duration: 120, fill: "forwards" });
 });
 </script>
-<script>
-const form = document.getElementById('contactForm');
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
 
-  fetch("https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec", { // ganti dengan URL Web App
-    method: "POST",
-    body: new FormData(form) // ini wajib agar Apps Script bisa baca e.parameter
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.status === "success"){
-      alert("Message sent successfully!");
-      form.reset();
-    } else {
-      alert("Error: " + data.message);
-    }
-  })
-  .catch(err => alert("Network Error: " + err));
-});
-</script>
 
 </html>
 
 
-https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec
+
