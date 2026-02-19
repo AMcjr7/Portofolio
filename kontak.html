@@ -26,8 +26,8 @@
             <!-- FORM -->
             <div class="contact-col">
                 <div id="contact_form">
-                    <form method="post" name="contact" action="https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec">
-                        <label for="author">Name</label>
+                    <form id="contactForm" name="contact">
+                    <label for="author">Name</label>
                         <input type="text" id="author" name="author" class="input_field" required>
 
                         <label for="email">Email</label>
@@ -87,22 +87,28 @@ document.addEventListener('mousemove', e => {
 });
 </script>
 <script>
-const form = document.forms['contact'];
-
+const form = document.getElementById('contactForm');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
-  
-  fetch("https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec", {
+
+  fetch("https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec", { // ganti dengan URL Web App
     method: "POST",
-    body: new FormData(form)
+    body: new FormData(form) // ini wajib agar Apps Script bisa baca e.parameter
   })
-  .then(response => alert("Message sent successfully!"))
-  .catch(error => alert("Error sending message"));
-  
-  form.reset();
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success"){
+      alert("Message sent successfully!");
+      form.reset();
+    } else {
+      alert("Error: " + data.message);
+    }
+  })
+  .catch(err => alert("Network Error: " + err));
 });
 </script>
 
 </html>
 
 
+https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec
