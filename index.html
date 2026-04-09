@@ -1,70 +1,313 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Asep Awaludin</title>
+    <title>AMcjr7 Design Grafis - Portofolio Profesional</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-    <!-- CSS GLOBAL -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== VARIABLES & GLOBAL ===== */
+        :root {
+            --bg-main: #020617;
+            --bg-card: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border-glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            cursor: none;
+            line-height: 1.6;
+        }
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor {
+            position: fixed; width: 10px; height: 10px;
+            background: var(--accent); border-radius: 50%;
+            pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 9999; transition: transform 0.2s;
+        }
+        .cursor-trail {
+            position: fixed; width: 30px; height: 30px;
+            border: 1px solid var(--accent); border-radius: 50%;
+            pointer-events: none; transform: translate(-50%, -50%);
+            opacity: 0.5; z-index: 9998;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(15px);
+            padding: 15px 5%; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; border-bottom: 1px solid var(--border-glass);
+        }
+        .logo { font-weight: 800; color: var(--accent); font-size: 1.4rem; text-decoration: none; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color: var(--accent); }
+
+        /* ===== LAYOUT ===== */
+        section { padding: 100px 5% 60px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
+        .card { background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border-glass); margin-bottom: 30px; }
+        .title { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; }
+        .title span { color: var(--accent); }
+
+        /* ===== HOME SECTION ===== */
+        #home { text-align: center; }
+        #home h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .rainbow-text {
+            background: linear-gradient(270deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background-size: 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: move-bg 8s linear infinite; font-weight: 800;
+        }
+        @keyframes move-bg { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-wrapper { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
+        .profile-img { width: 100%; border-radius: 20px; border: 3px solid var(--accent); box-shadow: 0 0 20px rgba(56,189,248,0.2); }
+        .skill-item { margin-bottom: 15px; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; }
+        .skill-bar { height: 8px; background: #1e293b; border-radius: 10px; overflow: hidden; }
+        .skill-fill { height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+        /* ===== JASA SECTION ===== */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .service-btn {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8); color: #020617;
+            padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 700;
+            text-align: center; transition: 0.3s;
+        }
+        .service-btn:hover { transform: translateY(-5px); background: #f8fafc; box-shadow: 0 10px 20px rgba(56,189,248,0.4); }
+
+        /* ===== KONTAK SECTION ===== */
+        .contact-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        .form-label { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-left: 5px; display: block; margin-top: 15px; }
+        .input_field { width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); color: white; border-radius: 12px; margin-top: 8px; outline: none; transition: all 0.3s ease; font-size: 0.95rem; }
+        .input_field:focus { border-color: var(--accent); background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 15px rgba(56,189,248,0.1); }
+        .input_field::placeholder { color: rgba(255,255,255,0.3); }
+        .textarea { height: 140px; resize: vertical; }
+        .btn-submit { background: linear-gradient(135deg, #0ea5e9, #38bdf8); color: #020617; border: none; padding: 15px 25px; border-radius: 30px; font-weight: 800; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 25px; font-size: 1.05rem; }
+        .btn-submit:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); }
+        
+        .contact-info-box { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; text-align: left; }
+        .contact-icon { background: rgba(56, 189, 248, 0.1); color: var(--accent); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: 0.3s; }
+        .contact-info-box:hover .contact-icon { transform: scale(1.1); background: var(--accent); color: #020617; }
+        .contact-text h4 { margin-bottom: 5px; font-size: 1.1rem; color: var(--text-main); }
+        .contact-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* ===== FOOTER ===== */
+        footer { padding: 40px 5%; text-align: center; border-top: 1px solid var(--border-glass); }
+        .marquee { overflow: hidden; white-space: nowrap; padding: 15px 0; color: var(--accent); font-weight: 600; }
+        .marquee span { display: inline-block; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .about-wrapper, .contact-grid { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+            body { cursor: auto; } .cursor, .cursor-trail { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
-<div class="cursor"></div>
-<div class="cursor-trail"></div>
+    <div class="cursor"></div>
+    <div class="cursor-trail"></div>
 
-<!-- NAVBAR -->
-<nav>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="jasa.html">Jasa Freelance</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-        <li><a href="https://asepkreatif14.github.io/berbagi/">Donasi</a></li>
-    </ul>
-</nav>
+    <nav>
+        <a href="#home" class="logo">AMcjr7.</a>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#jasa">Jasa</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+            <li><a href="https://asepkreatif14.github.io/berbagi/" style="color: var(--accent); border: 1px solid var(--accent); padding: 5px 15px; border-radius: 20px;">Donasi</a></li>
+        </ul>
+    </nav>
 
-<!-- CONTENT -->
-<div class="container">
-    <h1 style="text-align:center; color:var(--accent); margin-bottom:20px;">
-        Selamat Datang
-    </h1>
+    <!-- SECTION 1: HOME -->
+    <section id="home">
+        <div class="container">
+            <h1 class="rainbow-text">AMcjr7 Design Grafis</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
+                Membantu Anda mewujudkan desain profesional, cepat, dan berkualitas tinggi untuk segala kebutuhan bisnis maupun personal.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <a href="#jasa" class="btn-submit" style="text-decoration: none; width: auto;">Cek Layanan</a>
+                <a href="#kontak" class="btn-submit" style="text-decoration: none; width: auto; background: transparent; border: 1px solid var(--accent); color: var(--accent);">Hubungi Saya</a>
+            </div>
+        </div>
+    </section>
 
-    <p class="center" style="text-align:center; color:var(--text-muted); font-size:16px;">
-        Ini adalah website pribadi & portofolio saya.<br>
-        Digunakan sebagai CV online, jasa freelance, dan profil profesional.
-    </p>
-</div>
+    <!-- SECTION 2: TENTANG & KEAHLIAN -->
+    <section id="tentang">
+        <div class="container">
+            <h2 class="title">Tentang <span>& Keahlian</span></h2>
+            <div class="about-wrapper card">
+                <img src="asep.jpeg" alt="Asep Awaludin" class="profile-img">
+                <div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Asep Awaludin</h3>
+                    <p style="color: var(--accent); font-weight: 600; margin-bottom: 15px;">Freelance Graphic Designer & Technical Support</p>
+                    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem;">
+                        Seorang kreatif yang berfokus pada solusi desain visual dan dukungan teknis komputer. Saya memiliki dedikasi tinggi dalam memberikan hasil kerja yang rapi, cepat, dan sesuai dengan keinginan klien. Berdomisili di Cilacap, Jawa Tengah.
+                    </p>
+                    
+                    <h4 style="margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 15px;">Keahlian Utama</h4>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Adobe Photoshop</span><span>95%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
+                    </div>
 
-<!-- FOOTER -->
-<footer>
-    <p>© 2025 Asep Awaludin</p>
-    <div class="marquee">
-        <span>
-            Portofolio & CV Online • Freelance Graphic Designer • Fast Respon WhatsApp •
-        </span>
-    </div>
-</footer>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>CorelDRAW</span><span>90%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
+                    </div>
 
-<!-- JS GLOBAL -->
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Web Design (HTML & CSS)</span><span>85%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
+                    </div>
 
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Microsoft Office (Word/Excel)</span><span>98%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 98%;"></div></div>
+                    </div>
 
-</body>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Mengetik 10 Jari</span><span>100%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 100%;"></div></div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Instalasi OS (Windows & Linux)</span><span>92%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" style="width: 92%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: JASA -->
+    <section id="jasa">
+        <div class="container">
+            <h2 class="title">Layanan <span>Freelance</span></h2>
+            <div class="service-grid">
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Logo" target="_blank">Design Logo</a>
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Poster" target="_blank">Design Poster</a>
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Undangan" target="_blank">Undangan Digital</a>
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Edit%20Word" target="_blank">Editing Word / Pengetikan</a>
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Hapus%20BG" target="_blank">Hapus BG Foto</a>
+                <a class="service-btn" href="https://wa.me/6287738813613?text=Order%20Install" target="_blank">Install Ulang Win/Linux</a>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: center;" class="card">
+                <p>🚀 <strong>PROSES KILAT</strong> | 💰 Harga Mahasiswa | ✅ Hasil Profesional</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: KONTAK -->
+    <section id="kontak">
+        <div class="container">
+            <h2 class="title">Hubungi <span>Saya</span></h2>
+            <div class="contact-grid">
+                
+                <div class="card" style="padding: 40px;">
+                    <h3 style="margin-bottom: 5px; color: var(--text-main); font-size: 1.8rem;">Kirim Pesan</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">Silakan isi formulir di bawah untuk bertanya.</p>
+                    
+                    <form method="post" action="https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec">
+                        <label class="form-label">Nama Lengkap</label>
+                        <input type="text" name="author" class="input_field" placeholder="Nama Anda..." required>
+                        
+                        <label class="form-label">Email Aktif</label>
+                        <input type="email" name="email" class="input_field" placeholder="email@domain.com" required>
+                        
+                        <label class="form-label">Pesan Anda</label>
+                        <textarea name="text" class="input_field textarea" placeholder="Apa yang bisa saya bantu?" required></textarea>
+                        
+                        <button type="submit" class="btn-submit">Kirim Pesan 🚀</button>
+                    </form>
+                </div>
+
+                <div class="card" style="padding: 40px; background: linear-gradient(145deg, #0f172a, #1e293b);">
+                    <h3 style="margin-bottom: 30px; color: var(--text-main); font-size: 1.4rem;">Informasi Kontak</h3>
+                    
+                    <div class="contact-info-box">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h4>Lokasi</h4>
+                            <p>Dusun Cijeruk, Dayeuhluhur<br>Cilacap, Jawa Tengah</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-box">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h4>WhatsApp</h4>
+                            <p>0877-3881-3613</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 45px; border-top: 1px solid var(--border-glass); padding-top: 25px;">
+                        <a href="https://wa.me/6287738813613" target="_blank" class="btn-submit" style="display: block; text-align: center; text-decoration: none; background: #25D366; color: white; margin-top: 0; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);">
+                            Hubungi via WA
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Asep Awaludin - AMcjr7 Design</p>
+        <div class="marquee">
+            <span>📢 Desain Logo • Poster • Undangan Digital • Pengetikan Cepat • Instalasi OS • Terima Kasih Atas Kepercayaan Anda •</span>
+        </div>
+    </footer>
+
     <script>
-const cursor = document.querySelector('.cursor');
-const trail = document.querySelector('.cursor-trail');
+        // --- CUSTOM CURSOR ---
+        const cursor = document.querySelector('.cursor');
+        const trail = document.querySelector('.cursor-trail');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            trail.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 150, fill: "forwards" });
+        });
 
-document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-
-    trail.animate({
-        left: e.clientX + 'px',
-        top: e.clientY + 'px'
-    }, { duration: 120, fill: "forwards" });
-});
-</script>
-
+        // --- ACTIVE LINK ON SCROLL ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav ul li a');
+        window.onscroll = () => {
+            sections.forEach(sec => {
+                let top = window.scrollY;
+                let offset = sec.offsetTop - 150;
+                let height = sec.offsetHeight;
+                let id = sec.getAttribute('id');
+                if(top >= offset && top < offset + height) {
+                    navLinks.forEach(links => {
+                        links.classList.remove('active');
+                        const activeLink = document.querySelector('nav ul li a[href*=' + id + ']');
+                        if(activeLink) activeLink.classList.add('active');
+                    });
+                }
+            });
+        };
+    </script>
+</body>
 </html>
-
