@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi - AMcjr7 Design</title>
+    <title>Donasi & Platform - AMcjr7 Design</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --bg-main: #020617;
@@ -44,6 +48,7 @@
             max-width: 500px;
             width: 100%;
             text-align: center;
+            margin: 40px 0;
         }
 
         .logo-container img {
@@ -77,6 +82,7 @@
             font-weight: 700;
         }
 
+        /* --- Donasi Style --- */
         .donasi-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-glass);
@@ -113,7 +119,49 @@
 
         .btn-copy:hover { transform: scale(1.05); filter: brightness(1.1); }
 
-        .nav-buttons { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+        /* --- Social Media Style --- */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            padding: 12px 15px;
+            border-radius: 14px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: 0.3s;
+        }
+
+        .social-btn.full-width {
+            grid-column: span 2;
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateY(-3px);
+            color: var(--accent);
+        }
+
+        /* --- Nav Buttons --- */
+        .nav-buttons { margin-top: 35px; display: flex; flex-direction: column; gap: 10px; }
 
         .btn-main {
             background: linear-gradient(135deg, #0ea5e9, #38bdf8);
@@ -129,6 +177,7 @@
 
         footer { margin-top: 40px; color: rgba(255,255,255,0.2); font-size: 0.8rem; }
 
+        /* --- Toast Notification --- */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -149,6 +198,16 @@
 
         @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
         @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 400px) {
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            .social-btn.full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -207,9 +266,36 @@
                 <button class="btn-copy" onclick="copyText('087738813613')">Salin</button>
             </div>
 
+            <!-- SOCIAL MEDIA SECTION -->
+            <h2 style="margin-top: 35px;">Platform & Sosial Media</h2>
+            <div class="social-grid">
+                <a href="https://mobile.capcutshare.com/sv2/ZSHQha4wL/" target="_blank" class="social-btn">
+                    <i class="fa-solid fa-video"></i> CapCut
+                </a>
+                <a href="https://www.tiktok.com/@amcjr7?_r=1&_t=ZS-95QKNfRq7HT" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.instagram.com/asepawaludin13?igsh=MWdsbmwyMGdvY3gwbA==" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.facebook.com/share/1HexTqEaLB/" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://x.com/Asepkreatif14" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-x-twitter"></i> X (Twitter)
+                </a>
+                <a href="https://t.me/Asepkreatif14" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-telegram"></i> Telegram
+                </a>
+                <!-- Full width for WhatsApp -->
+                <a href="https://wa.me/6287738813613" target="_blank" class="social-btn full-width">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+
             <div class="nav-buttons">
                 <a href="http://amcjr7.my.id/" class="btn-main">Kembali ke Portofolio</a>
-                <a href="https://wa.me/6287738813613" target="_blank" style="text-decoration:none; color:var(--text-muted); font-size:0.85rem;">Konfirmasi via WhatsApp</a>
+                <a href="https://wa.me/6287738813613" target="_blank" style="text-decoration:none; color:var(--text-muted); font-size:0.85rem; margin-top: 5px;">Konfirmasi Donasi via WhatsApp</a>
             </div>
         </div>
 
