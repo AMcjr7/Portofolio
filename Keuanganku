@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #0f0f11; color: #e4e4e7; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #27272a; padding-bottom: 20px; }
+        header h1 { color: #10b981; font-size: 26px; font-weight: 700; }
+        
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 25px; }
+        .card { background-color: #18181b; padding: 20px; border-radius: 12px; border: 1px solid #27272a; text-align: center; }
+        .card h3 { font-size: 13px; color: #a1a1aa; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card p { font-size: 24px; font-weight: bold; }
+        .income { color: #34d399; }
+        .expense { color: #f87171; }
+        
+        .content-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .box { background-color: #18181b; padding: 20px; border-radius: 12px; border: 1px solid #27272a; }
+        .box h2 { font-size: 16px; margin-bottom: 15px; color: #10b981; border-bottom: 1px solid #27272a; padding-bottom: 8px; }
+        
+        .table-wrapper { max-height: 350px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+        th, td { padding: 12px 10px; border-bottom: 1px solid #27272a; }
+        th { background-color: #0f0f11; color: #a1a1aa; font-weight: 600; position: sticky; top: 0; }
+        
+        #loading { text-align: center; color: #a1a1aa; padding: 40px; font-size: 16px; }
+        .chart-container { position: relative; margin: auto; height: 260px; width: 260px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Finance Manager Dashboard</h1>
+        <p style="color: #a1a1aa; font-size: 13px; margin-top: 5px;">Data terintegrasi otomatis dari Telegram Bot</p>
+    </header>
+
+    <div id="loading">Memuat visualisasi data keuangan...</div>
+
+    <div class="summary-grid" id="main-dashboard" style="display: none;">
+        <div class="card">
+            <h3>Total Pemasukan</h3>
+            <p id="total-pemasukan" class="income">Rp 0</p>
+        </div>
+        <div class="card">
+            <h3>Total Pengeluaran</h3>
+            <p id="total-pengeluaran" class="expense">Rp 0</p>
+        </div>
+        <div class="card">
+            <h3>Saldo Tersisa</h3>
+            <p id="saldo-akhir">Rp 0</p>
+        </div>
+    </div>
+
+    <div class="content-layout" id="content-dashboard" style="display: none;">
+        <div class="box">
+            <h2>Grafik Kategori Pengeluaran</h2>
+            <div class="chart-container">
+                <canvas id="chartKategori"></canvas>
+            </div>
+        </div>
+        
+        <div class="box">
+            <h2>Riwayat Transaksi Terakhir</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-transaksi">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Taruh URL Web App Google Apps Script (dari Langkah 3) di bawah ini!
+    const API_URL = "https://script.google.com/macros/s/AKfycbzHr4LuVFswKLZDngsNyQ3sDp6aiqlWamINfQaTpJBzZpKZcDLjM97dDeqzCSRJWCf1/exec";
+
+    async function loadData() {
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('main-dashboard').style.display = 'grid';
+            document.getElementById('content-dashboard').style.display = 'grid';
+            
+            let masukan = 0;
+            let keluaran = 0;
+            let tBody = document.getElementById('tabel-transaksi');
+            let kategoriData = {};
+
+            if(data.length === 0) {
+                tBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#a1a1aa;">Belum ada data transaksi masuk.</td></tr>`;
+                return;
+            }
+
+            // Membalik urutan agar transaksi terbaru muncul paling atas di tabel website
+            data.reverse().forEach(item => {
+                let nominal = parseFloat(item.total);
+                
+                if (nominal < 0) {
+                    let positifNominal = Math.abs(nominal);
+                    keluaran += positifNominal;
+                    kategoriData[item.kategori] = (kategoriData[item.kategori] || 0) + positifNominal;
+                } else {
+                    masukan += nominal;
+                }
+
+                let row = `<tr>
+                    <td style="white-space: nowrap;">${item.tanggal}</td>
+                    <td><strong>${item.toko}</strong><br><small style="color:#a1a1aa">${item.items}</small></td>
+                    <td class="${nominal < 0 ? 'expense' : 'income'}" style="font-weight:600;">
+                        ${nominal < 0 ? '-' : ''}Rp ${Math.abs(nominal).toLocaleString('id-ID')}
+                    </td>
+                </tr>`;
+                tBody.innerHTML += row;
+            });
+
+            // Set Data Angka Ringkasan
+            document.getElementById('total-pemasukan').innerText = "Rp " + masukan.toLocaleString('id-ID');
+            document.getElementById('total-pengeluaran').innerText = "Rp " + keluaran.toLocaleString('id-ID');
+            
+            let saldo = masukan - keluaran;
+            let saldoEl = document.getElementById('saldo-akhir');
+            saldoEl.innerText = "Rp " + saldo.toLocaleString('id-ID');
+            saldoEl.className = saldo >= 0 ? 'income' : 'expense';
+
+            // Generate Grafik Menggunakan Chart.js
+            const ctx = document.getElementById('chartKategori').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(kategoriData),
+                    datasets: [{
+                        data: Object.values(kategoriData),
+                        backgroundColor: ['#f87171', '#60a5fa', '#fbbf24', '#34d399', '#a78bfa', '#f472b6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { 
+                            position: 'bottom',
+                            labels: { color: '#e4e4e7', font: { size: 11 }, padding: 10 } 
+                        } 
+                    }
+                }
+            });
+
+        } catch (error) {
+            document.getElementById('loading').innerText = "Gagal memuat data dari database: " + error.message;
+        }
+    }
+
+    loadData();
+</script>
+</body>
+</html>
