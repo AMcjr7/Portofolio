@@ -18,45 +18,223 @@
             --expense: #f87171;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); padding: 16px; display: flex; flex-direction: column; min-height: 100vh; }
-        .container { width: 100%; max-width: 1200px; margin: 0 auto; flex: 1; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, -apple-system, sans-serif; }
+        
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        header { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-        .logo-container { width: 56px; height: 56px; background: linear-gradient(135deg, var(--primary), #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px var(--primary-dim); }
-        .logo-container svg { width: 28px; height: 28px; fill: #ffffff; }
-        .header-text h1 { color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; text-align: center; }
-        .header-text p { color: var(--text-muted); font-size: 13px; margin-top: 4px; text-align: center; }
-        .owner-badge { background-color: var(--primary-dim); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .container { 
+            width: 100%;
+            max-width: 1200px; 
+            margin: 0 auto; 
+            flex: 1;
+        }
 
-        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .card { background-color: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); transition: border-color 0.2s ease; }
-        .card:hover { border-color: #3f3f46; }
-        .card h3 { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .card .value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
-        .card .indicator { font-size: 11px; margin-top: 6px; display: flex; align-items: center; gap: 4px; color: var(--text-muted); }
+        /* Brand Header Section */
+        header { 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px; 
+            border-bottom: 1px solid var(--border); 
+            padding-bottom: 20px; 
+        }
+
+        /* Logo Bulat Pro */
+        .logo-container {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px var(--primary-dim);
+        }
+
+        .logo-container svg {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+        }
+
+        .header-text h1 { 
+            color: #ffffff; 
+            font-size: 24px; 
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+        
+        .header-text p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .owner-badge {
+            background-color: var(--primary-dim);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* Summary Dashboard Grid (Auto-Fit Laptop/HP) */
+        .summary-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 16px; 
+            margin-bottom: 24px; 
+        }
+
+        .card { 
+            background-color: var(--bg-card); 
+            padding: 20px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #3f3f46;
+        }
+
+        .card h3 { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            margin-bottom: 6px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            text-align: left;
+        }
+
+        .card .value { 
+            font-size: 26px; 
+            font-weight: 700; 
+            text-align: left;
+            letter-spacing: -0.5px;
+        }
+
+        .card .indicator {
+            font-size: 11px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+        }
 
         .income { color: var(--income); }
         .expense { color: var(--expense); }
         
-        .content-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
-        @media (min-width: 1024px) { .content-layout { grid-template-columns: 4fr 6fr; } }
+        /* Content Layout Grid (Bikin Auto-Fit Samping di PC, Vertikal di HP) */
+        .content-layout { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+            gap: 20px; 
+        }
 
-        .box { background-color: var(--bg-card); padding: 24px; border-radius: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; }
-        .box h2 { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: #ffffff; border-left: 3px solid var(--primary); padding-left: 10px; }
+        @media (min-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 4fr 6fr; 
+            }
+        }
+
+        .box { 
+            background-color: var(--bg-card); 
+            padding: 24px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box h2 { 
+            font-size: 16px; 
+            font-weight: 600;
+            margin-bottom: 20px; 
+            color: #ffffff; 
+            border-left: 3px solid var(--primary);
+            padding-left: 10px;
+        }
         
-        .table-wrapper { max-height: 380px; overflow-y: auto; padding-right: 4px; }
+        /* Modern Table Wrapper */
+        .table-wrapper { 
+            max-height: 380px; 
+            overflow-y: auto; 
+            margin-right: -4px;
+            padding-right: 4px;
+        }
+
+        /* Custom Scrollbar */
         .table-wrapper::-webkit-scrollbar { width: 6px; }
+        .table-wrapper::-webkit-scrollbar-track { background: transparent; }
         .table-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
         table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
         th, td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
-        th { background-color: var(--bg-card); color: var(--text-muted); font-size: 12px; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
+        
+        th { 
+            background-color: var(--bg-card); 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+        }
+
+        tr { transition: background-color 0.15s ease; }
         tbody tr:hover { background-color: rgba(255, 255, 255, 0.02); }
         
-        #loading { text-align: center; color: var(--text-muted); padding: 60px 20px; font-size: 15px; background-color: var(--bg-card); border-radius: 16px; border: 1px solid var(--border); line-height: 1.6; }
-        .chart-container { position: relative; margin: auto; height: 280px; width: 100%; max-width: 280px; display: flex; align-items: center; justify-content: center; }
-        footer { text-align: center; padding: 30px 20px 10px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
+        #loading { 
+            text-align: center; 
+            color: var(--text-muted); 
+            padding: 60px 20px; 
+            font-size: 15px; 
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-container { 
+            position: relative; 
+            margin: auto; 
+            height: 280px; 
+            width: 100%;
+            max-width: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px 10px;
+            color: var(--text-muted);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
@@ -81,17 +259,23 @@
         <div class="card">
             <h3>Total Pemasukan</h3>
             <div id="total-pemasukan" class="value income">Rp 0</div>
-            <div class="indicator"><span class="income">▲</span> Aliran dana masuk</div>
+            <div class="indicator">
+                <span class="income">▲</span> Aliran dana masuk bulan ini
+            </div>
         </div>
         <div class="card">
             <h3>Total Pengeluaran</h3>
             <div id="total-pengeluaran" class="value expense">Rp 0</div>
-            <div class="indicator"><span class="expense">▼</span> Akumulasi biaya keluar</div>
+            <div class="indicator">
+                <span class="expense">▼</span> Akumulasi biaya keluar
+            </div>
         </div>
         <div class="card">
             <h3>Saldo Bersih</h3>
             <div id="saldo-akhir" class="value">Rp 0</div>
-            <div class="indicator" id="saldo-status">ℹ️ Status limit tersedia</div>
+            <div class="indicator" id="saldo-status">
+                ℹ️ Sisa limit saldo tersedia
+            </div>
         </div>
     </div>
 
@@ -122,7 +306,7 @@
 </div>
 
 <footer>
-    &copy; 2026 Dashboard Keuanganku. Designed by <strong>Asep Awaludin</strong>.
+    &copy; 2026 Dashboard Keuanganku. Designed & Engineered by <strong>Asep Awaludin</strong>. All rights reserved.
 </footer>
 
 <script>
@@ -131,8 +315,6 @@
     async function loadData() {
         try {
             const response = await fetch(API_URL);
-            if (!response.ok) throw new Error("Respon server Google Apps Script tidak sukses.");
-            
             const data = await response.json();
             
             document.getElementById('loading').style.display = 'none';
@@ -144,28 +326,28 @@
             let tBody = document.getElementById('tabel-transaksi');
             let kategoriData = {};
 
-            if(!data || data.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding: 30px;">Belum ada riwayat data transaksi di Sheet "Transaksi".</td></tr>`;
+            if(data.length === 0) {
+                tBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding: 30px;">Belum ada riwayat data transaksi yang masuk.</td></tr>`;
                 return;
             }
 
+            // Membalikkan urutan array (data baris terbawah Google Sheets tampil di baris teratas web)
             data.reverse().forEach(item => {
-                let nominal = parseFloat(item.total) || 0;
+                let nominal = parseFloat(item.total);
                 
                 if (nominal < 0) {
                     let positifNominal = Math.abs(nominal);
                     keluaran += positifNominal;
-                    let kat = item.kategori || "Lainnya";
-                    kategoriData[kat] = (kategoriData[kat] || 0) + positifNominal;
+                    kategoriData[item.kategori] = (kategoriData[item.kategori] || 0) + positifNominal;
                 } else {
                     masukan += nominal;
                 }
 
                 let row = `<tr>
-                    <td style="white-space: nowrap; color: var(--text-muted); font-size: 13px;">${item.tanggal || '-'}</td>
+                    <td style="white-space: nowrap; color: var(--text-muted); font-size: 13px;">${item.tanggal}</td>
                     <td>
-                        <span style="font-weight: 600; color: #ffffff;">${item.toko || 'Tidak Disebut'}</span><br>
-                        <small style="color: var(--text-muted); font-size: 12px;">${item.items || '-'} &bull; <span style="color: #818cf8;">${item.kategori || 'Umum'}</span></small>
+                        <span style="font-weight: 600; color: #ffffff;">${item.toko}</span><br>
+                        <small style="color: var(--text-muted); font-size: 12px;">${item.items} &bull; <span style="color: #818cf8;">${item.kategori}</span></small>
                     </td>
                     <td class="${nominal < 0 ? 'expense' : 'income'}" style="font-weight: 600; text-align: right; white-space: nowrap;">
                         ${nominal < 0 ? '-' : '+'} Rp ${Math.abs(nominal).toLocaleString('id-ID')}
@@ -174,10 +356,10 @@
                 tBody.innerHTML += row;
             });
 
+            // Set Data Angka Atas Card Ringkasan
             document.getElementById('total-pemasukan').innerText = "Rp " + masukan.toLocaleString('id-ID');
             document.getElementById('total-pengeluaran').innerText = "Rp " + keluaran.toLocaleString('id-ID');
             
-            let saldo = masukan -彩 - keluaran; 
             let saldo = masukan - keluaran;
             let saldoEl = document.getElementById('saldo-akhir');
             let saldoStatusEl = document.getElementById('saldo-status');
@@ -186,43 +368,49 @@
             
             if (saldo >= 0) {
                 saldoEl.className = "value income";
-                saldoStatusEl.innerHTML = `<span class="income">✔</span> Neraca Keuangan Stabil`;
+                saldoStatusEl.innerHTML = `<span class="income">✔</span> Neraca keuangan tergolong Stabil`;
             } else {
                 saldoEl.className = "value expense";
-                saldoStatusEl.innerHTML = `<span class="expense">⚠</span> Anggaran Defisit`;
+                saldoStatusEl.innerHTML = `<span class="expense">⚠</span> Anggaran defisit (Overbudget)`;
             }
 
-            if(Object.keys(kategoriData).length > 0) {
-                const ctx = document.getElementById('chartKategori').getContext('2d');
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: Object.keys(kategoriData),
-                        datasets: [{
-                            data: Object.values(kategoriData),
-                            backgroundColor: ['#f87171', '#60a5fa', '#fbbf24', '#34d399', '#a78bfa', '#f472b6', '#22d3ee'],
-                            borderWidth: 2,
-                            borderColor: '#141416'
-                        }]
-                    },
-                    options: { 
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { 
-                            legend: { 
-                                position: 'bottom',
-                                labels: { color: '#e4e4e7', font: { size: 11 }, padding: 12, usePointStyle: true } 
+            // Set Grafik Donut Berwarna Premium (Chart.js)
+            const ctx = document.getElementById('chartKategori').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(kategoriData),
+                    datasets: [{
+                        data: Object.values(kategoriData),
+                        backgroundColor: ['#f87171', '#60a5fa', '#fbbf24', '#34d399', '#a78bfa', '#f472b6', '#22d3ee'],
+                        borderWidth: 2,
+                        borderColor: '#141416'
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { 
+                            position: 'bottom',
+                            labels: { 
+                                color: '#e4e4e7', 
+                                font: { size: 11, family: 'Segoe UI' },
+                                padding: 12,
+                                usePointStyle: true
                             } 
-                        },
-                        cutout: '70%'
-                    }
-                });
-            }
+                        } 
+                    },
+                    cutout: '70%'
+                }
+            });
 
         } catch (error) {
-            document.getElementById('loading').innerHTML = `⚠️ <b>Gagal Memuat Data Keuangan</b><br><br><span style="color:var(--expense); font-size:13px;">Detail Error: ${error.message}</span><br><br><small style="color:var(--text-muted)">Pastikan Apps Script Anda sudah di-deploy sebagai 'Anyone'.</small>`;
+            document.getElementById('loading').innerText = "⚠️ Gagal mengambil data transmisi API: " + error.message;
+            document.getElementById('loading').style.color = "var(--expense)";
         }
     }
+
     loadData();
 </script>
 </body>
