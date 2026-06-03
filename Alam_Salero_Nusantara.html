@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alam Salero Nusantara - Masakan Minang Cita Rasa Otentik</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts (Playfair Display for headings, Plus Jakarta Sans for body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#220c04',
+              gold: '#d4af37',
+              goldlight: '#f3e5ab',
+              accent: '#8b0000',
+              cream: '#fffdf9',
+              slate: '#4a3f35'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #220c04;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-brand-cream text-brand-dark font-sans selection:bg-brand-gold selection:text-brand-dark">
+
+  <!-- TOP ANNOUNCEMENT BANNER -->
+  <div class="bg-brand-dark text-brand-gold text-xs md:text-sm py-2 px-4 text-center font-semibold border-b border-brand-gold/30 flex items-center justify-center gap-2">
+    <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+    Siap Kirim Instant di Lingkungan Kantin Polda! Luar Area? Konfirmasi Dulu Yuk.
+  </div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-brand-gold/20 shadow-xl py-3 px-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <!-- Logo & Name -->
+      <a href="#" class="flex items-center gap-3">
+        <!-- SVG Rumah Gadang Silhouette Icon -->
+        <div class="text-brand-gold">
+          <svg class="w-10 h-10" viewBox="0 0 100 100" fill="currentColor">
+            <path d="M50 15 L85 38 L85 45 L50 32 L15 45 L15 38 Z" />
+            <path d="M50 28 L95 55 L90 60 L80 50 L80 85 L20 85 L20 50 L10 60 L5 55 Z" fill="currentColor" opacity="0.8"/>
+            <rect x="42" y="65" width="16" height="20" fill="#220c04"/>
+            <polygon points="50,45 55,58 45,58" fill="#d4af37"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-serif text-xl md:text-2xl font-bold text-brand-gold tracking-wide">Alam Salero</h1>
+          <p class="text-[10px] md:text-xs tracking-widest uppercase text-brand-goldlight/80">Nusantara • Masakan Minang</p>
+        </div>
+      </a>
+
+      <!-- Quick Delivery Badge & Cart Summary -->
+      <div class="flex items-center gap-4">
+        <a href="tel:087738813613" class="hidden md:flex items-center gap-2 text-brand-goldlight hover:text-brand-gold text-sm font-medium transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          087738813613
+        </a>
+        <button onclick="toggleCart()" class="relative bg-brand-gold text-brand-dark p-2.5 rounded-full hover:bg-white transition-all duration-300 shadow-lg flex items-center gap-2 font-bold text-sm">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span id="cart-count-badge" class="bg-brand-accent text-white text-xs px-2 py-0.5 rounded-full">0</span>
+          <span id="cart-total-badge" class="hidden sm:inline">Rp 0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative bg-gradient-to-b from-brand-dark to-brand-slate text-white py-12 md:py-20 px-4 overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-block bg-brand-gold/20 border border-brand-gold text-brand-goldlight text-xs px-4 py-1.5 rounded-full font-bold uppercase tracking-widest mb-4">
+        Asli & Lezat Selera Minang
+      </div>
+      <h2 class="font-serif text-4xl md:text-6xl font-bold mb-4 tracking-tight leading-tight text-brand-gold">
+        Cita Rasa Otentik <br class="hidden sm:inline">Alam Salero Nusantara
+      </h2>
+      <p class="text-brand-goldlight/90 max-w-2xl mx-auto text-sm md:text-lg mb-8 leading-relaxed">
+        Menghadirkan kelezatan masakan tradisional Minang langsung ke tempat Anda. Nikmati sajian bumbu melimpah dengan bahan-bahan pilihan terbaik.
+      </p>
+
+      <!-- Quick Actions / Badges -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left text-sm">
+        <div class="bg-black/30 border border-brand-gold/15 p-4 rounded-xl flex items-start gap-3">
+          <div class="bg-brand-gold text-brand-dark p-2 rounded-lg shrink-0 mt-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-brand-gold">Lokasi Pengantaran</h4>
+            <p class="text-xs text-white/70">Kantin POLDA (Instant) & Sekitarnya. Wilayah lain dikonfirmasi terlebih dahulu.</p>
+          </div>
+        </div>
+        <div class="bg-black/30 border border-brand-gold/15 p-4 rounded-xl flex items-start gap-3">
+          <div class="bg-brand-gold text-brand-dark p-2 rounded-lg shrink-0 mt-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-brand-gold">Jam Operasional</h4>
+            <p class="text-xs text-white/70">Setiap Hari Kerja (Senin - Jumat) dari Pagi hingga Sore Hari.</p>
+          </div>
+        </div>
+        <div class="bg-black/30 border border-brand-gold/15 p-4 rounded-xl flex items-start gap-3">
+          <div class="bg-brand-gold text-brand-dark p-2 rounded-lg shrink-0 mt-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-brand-gold">Pesan Mudah & Instan</h4>
+            <p class="text-xs text-white/70">Pilih menu favoritmu, isi detail pengiriman, pesanan langsung masuk WA!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO PENGIRIMAN AREA BANNER -->
+  <section class="max-w-6xl mx-auto px-4 mt-8">
+    <div class="bg-yellow-50 border-l-4 border-brand-gold p-4 rounded-r-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <span class="text-2xl mt-0.5">🚀</span>
+        <div>
+          <h3 class="font-bold text-brand-dark text-base">Informasi Khusus Pengiriman</h3>
+          <p class="text-sm text-brand-slate leading-relaxed">
+            Pesanan Anda siap dikirimkan langsung untuk area <strong>Lingkungan Kantin Polda</strong>. Jika lokasi Anda berada di luar komplek Polda (jarak jauh), silakan konfirmasi pesanan terlebih dahulu kepada admin kami.
+          </p>
+        </div>
+      </div>
+      <a href="https://wa.me/6287738813613?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20ingin%20tanya%20mengenai%20layanan%20antar%20ke%20luar%20area%20Polda." target="_blank" class="bg-brand-dark hover:bg-brand-slate text-brand-gold hover:text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 text-center shadow-md">
+        Tanya Admin (Luar Area)
+      </a>
+    </div>
+  </section>
+
+  <!-- MENU SECTION -->
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Tab Navigation or Section Titles -->
+    <div class="flex flex-wrap justify-center gap-4 mb-10">
+      <a href="#paket-komplit" class="px-6 py-2.5 rounded-full bg-brand-dark text-brand-gold font-bold text-sm hover:scale-105 transition-transform shadow-md">
+        🍱 Paket Nasi Komplit
+      </a>
+      <a href="#menu-satuan" class="px-6 py-2.5 rounded-full bg-white text-brand-slate border border-brand-gold/30 hover:border-brand-gold font-semibold text-sm hover:scale-105 transition-transform shadow-sm">
+        🍛 Menu Satuan (Ala Carte)
+      </a>
+      <a href="#minuman" class="px-6 py-2.5 rounded-full bg-white text-brand-slate border border-brand-gold/30 hover:border-brand-gold font-semibold text-sm hover:scale-105 transition-transform shadow-sm">
+        🥤 Aneka Minuman
+      </a>
+    </div>
+
+    <!-- SECTION 1: PAKET KOMPLIT -->
+    <div id="paket-komplit" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6 border-b border-brand-gold/20 pb-3">
+        <span class="text-3xl">🍱</span>
+        <div>
+          <h3 class="font-serif text-2xl md:text-3xl font-bold text-brand-dark">Pilihan Paket Nasi Komplit</h3>
+          <p class="text-xs md:text-sm text-brand-slate">Sudah termasuk Nasi Putih hangat, Sayur, Cabe Ijo khas Minang.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- PAKET A -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-brand-gold/15 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-3 mb-2">
+              <span class="bg-brand-dark text-brand-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Paket A</span>
+              <span class="text-xl md:text-2xl font-serif font-bold text-brand-accent">Rp 35.000</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold mb-2 text-brand-dark">Nasi Rendang Komplit</h4>
+            <p class="text-sm text-brand-slate/80 leading-relaxed mb-4">
+              Nasi Putih, Rendang daging Padang legendaris yang empuk dan kaya rempah, Sayur Kapau, serta sambal Cabe Ijo yang gurih.
+            </p>
+          </div>
+          <div class="p-6 pt-0">
+            <button onclick="addToCart('pkg_a', 'Nasi Rendang Komplit', 35000, 'Nasi Putih, Rendang, Sayur, Cabe Ijo')" class="w-full bg-brand-dark hover:bg-brand-gold text-brand-gold hover:text-brand-dark py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+              Tambah Ke Keranjang
+            </button>
+          </div>
+        </div>
+
+        <!-- PAKET B -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-brand-gold/15 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-3 mb-2">
+              <span class="bg-brand-dark text-brand-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Paket B</span>
+              <span class="text-xl md:text-2xl font-serif font-bold text-brand-accent">Rp 33.000</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold mb-2 text-brand-dark">Nasi Ayam Komplit</h4>
+            <p class="text-sm text-brand-slate/80 leading-relaxed mb-4">
+              Nasi Putih, Sayur, Cabe Ijo dengan pilihan olahan ayam istimewa yang bisa Anda pilih di bawah ini:
+            </p>
+            <!-- Variant Selector -->
+            <div class="bg-brand-cream p-3.5 rounded-xl border border-brand-gold/10 mb-2">
+              <label class="block text-xs font-bold text-brand-slate uppercase tracking-wider mb-2">Pilih Varian Ayam:</label>
+              <div class="grid grid-cols-3 gap-2">
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_b" value="Ayam Gulai" checked class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Ayam Gulai</span>
+                </label>
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_b" value="Ayam Goreng" class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Ayam Goreng</span>
+                </label>
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_b" value="Ayam Bakar" class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Ayam Bakar</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <button onclick="addPackageWithVariant('pkg_b', 'Nasi Ayam Komplit', 33000, 'variant_pkg_b')" class="w-full bg-brand-dark hover:bg-brand-gold text-brand-gold hover:text-brand-dark py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+              Tambah Ke Keranjang
+            </button>
+          </div>
+        </div>
+
+        <!-- PAKET C -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-brand-gold/15 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-3 mb-2">
+              <span class="bg-brand-dark text-brand-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Paket C</span>
+              <span class="text-xl md:text-2xl font-serif font-bold text-brand-accent">Rp 25.000</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold mb-2 text-brand-dark">Nasi Telur Komplit</h4>
+            <p class="text-sm text-brand-slate/80 leading-relaxed mb-4">
+              Nasi Putih, Sayur, Cabe Ijo dengan pilihan olahan telur Minang yang nikmat sesuai selera Anda:
+            </p>
+            <!-- Variant Selector -->
+            <div class="bg-brand-cream p-3.5 rounded-xl border border-brand-gold/10 mb-2">
+              <label class="block text-xs font-bold text-brand-slate uppercase tracking-wider mb-2">Pilih Varian Telur:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_c" value="Telur Gulai" checked class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Telur Gulai</span>
+                </label>
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_c" value="Telur Balado" class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Telur Balado</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <button onclick="addPackageWithVariant('pkg_c', 'Nasi Telur Komplit', 25000, 'variant_pkg_c')" class="w-full bg-brand-dark hover:bg-brand-gold text-brand-gold hover:text-brand-dark py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+              Tambah Ke Keranjang
+            </button>
+          </div>
+        </div>
+
+        <!-- PAKET D -->
+        <div class="bg-white rounded-2xl overflow-hidden border border-brand-gold/15 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-3 mb-2">
+              <span class="bg-brand-dark text-brand-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Paket D</span>
+              <span class="text-xl md:text-2xl font-serif font-bold text-brand-accent">Rp 33.000</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold mb-2 text-brand-dark">Nasi Tongkol Komplit</h4>
+            <p class="text-sm text-brand-slate/80 leading-relaxed mb-4">
+              Nasi Putih, Sayur, Cabe Ijo dengan pilihan olahan ikan tongkol bumbu Minang asli yang lezat:
+            </p>
+            <!-- Variant Selector -->
+            <div class="bg-brand-cream p-3.5 rounded-xl border border-brand-gold/10 mb-2">
+              <label class="block text-xs font-bold text-brand-slate uppercase tracking-wider mb-2">Pilih Varian Tongkol:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_d" value="Tongkol Asam Padeh" checked class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Tongkol Asam Padeh</span>
+                </label>
+                <label class="flex items-center justify-center p-2 rounded-lg border border-brand-gold/20 bg-white cursor-pointer hover:bg-brand-goldlight/30 transition-all text-xs font-semibold text-center select-none">
+                  <input type="radio" name="variant_pkg_d" value="Tongkol Balado" class="hidden peer">
+                  <span class="peer-checked:text-brand-accent">Tongkol Balado</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <button onclick="addPackageWithVariant('pkg_d', 'Nasi Tongkol Komplit', 33000, 'variant_pkg_d')" class="w-full bg-brand-dark hover:bg-brand-gold text-brand-gold hover:text-brand-dark py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+              Tambah Ke Keranjang
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: MENU SATUAN -->
+    <div id="menu-satuan" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6 border-b border-brand-gold/20 pb-3">
+        <span class="text-3xl">🍛</span>
+        <div>
+          <h3 class="font-serif text-2xl md:text-3xl font-bold text-brand-dark">Menu Satuan (Ala Carte)</h3>
+          <p class="text-xs md:text-sm text-brand-slate">Tambahan hidangan lauk pauk khas Minang yang lezat untuk melengkapi santapan Anda.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- ITEM 1 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Nasi Putih</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 12.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Nasi putih pulen hangat porsi pas kenyang.</p>
+          <button onclick="addToCart('satuan_1', 'Nasi Putih (Satuan)', 12000, 'Nasi Putih')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Rendang</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 29.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Rendang daging sapi otentik berbumbu kaya rempah hitam pekat.</p>
+          <button onclick="addToCart('satuan_2', 'Rendang (Satuan)', 29000, 'Rendang')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Ayam Gulai</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 27.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Ayam bumbu gulai kental gurih khas masakan Padang.</p>
+          <button onclick="addToCart('satuan_3', 'Ayam Gulai (Satuan)', 27000, 'Ayam Gulai')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 4 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Ayam Goreng</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 27.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Ayam goreng rempah dengan taburan bumbu kriuk lezat.</p>
+          <button onclick="addToCart('satuan_4', 'Ayam Goreng (Satuan)', 27000, 'Ayam Goreng')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 5 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Ayam Bakar</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 27.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Ayam bakar bumbu kelapa dengan aroma panggangan yang khas.</p>
+          <button onclick="addToCart('satuan_5', 'Ayam Bakar (Satuan)', 27000, 'Ayam Bakar')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 6 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Telur Gulai</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 19.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Telur rebus yang disiram kuah gulai Padang yang medok.</p>
+          <button onclick="addToCart('satuan_6', 'Telur Gulai (Satuan)', 19000, 'Telur Gulai')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 7 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Telur Balado</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 19.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Telur rebus goreng dibalur sambal merah balado pedas manis gurih.</p>
+          <button onclick="addToCart('satuan_7', 'Telur Balado (Satuan)', 19000, 'Telur Balado')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 8 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2 flex-wrap">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Telor Barendo <span class="text-xs font-normal text-brand-slate/70">(By Request)</span></h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 19.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Telur dadar khas Minang berenda renyah gurih luar biasa.</p>
+          <button onclick="addToCart('satuan_8', 'Telor Barendo (Satuan)', 19000, 'Telor Barendo')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 9 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Perkedel</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 15.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Perkedel kentang lembut dengan paduan rempah istimewa.</p>
+          <button onclick="addToCart('satuan_9', 'Perkedel (Satuan)', 15000, 'Perkedel')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 10 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Cabe Ijo</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 18.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Sambal ijo Padang porsi ekstra bagi pencinta pedas gurih.</p>
+          <button onclick="addToCart('satuan_10', 'Cabe Ijo (Satuan)', 18000, 'Cabe Ijo')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 11 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Sayur Singkong Rebus</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 24.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Daun singkong rebus pilihan, empuk, bersih & higienis.</p>
+          <button onclick="addToCart('satuan_11', 'Sayur Singkong Rebus (Satuan)', 24000, 'Sayur Singkong')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 12 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Tumis Sayur</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 29.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Tumisan aneka sayur sehat yang segar dengan bumbu meresap.</p>
+          <button onclick="addToCart('satuan_12', 'Tumis Sayur (Satuan)', 29000, 'Tumis Sayur')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 13 (IKAN) -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Tongkol Asam Padeh</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 27.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Ikan tongkol kuah asam pedas Minang yang segar tanpa santan.</p>
+          <button onclick="addToCart('satuan_13', 'Tongkol Asam Padeh (Satuan)', 27000, 'Tongkol Asam Padeh')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+
+        <!-- ITEM 14 (IKAN) -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Tongkol Balado</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 27.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Ikan tongkol goreng berbalut lumuran cabe balado merah menggoda.</p>
+          <button onclick="addToCart('satuan_14', 'Tongkol Balado (Satuan)', 27000, 'Tongkol Balado')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah ke Piring
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: MINUMAN -->
+    <div id="minuman" class="mb-8 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6 border-b border-brand-gold/20 pb-3">
+        <span class="text-3xl">🥤</span>
+        <div>
+          <h3 class="font-serif text-2xl md:text-3xl font-bold text-brand-dark">Aneka Minuman Segar</h3>
+          <p class="text-xs md:text-sm text-brand-slate">Pelepas dahaga paling pas menemani sajian kuliner berselera.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- DRINK 1 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Es Teh Manis</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 8.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Es teh dingin manis menyegarkan.</p>
+          <button onclick="addToCart('drink_1', 'Es Teh Manis', 8000, 'Dingin')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah Minuman
+          </button>
+        </div>
+
+        <!-- DRINK 2 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Teh Manis Hangat</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 6.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Seduhan teh hangat beraroma harum dan manis pas.</p>
+          <button onclick="addToCart('drink_2', 'Teh Manis Hangat', 6000, 'Hangat')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah Minuman
+          </button>
+        </div>
+
+        <!-- DRINK 3 -->
+        <div class="bg-white p-5 rounded-2xl border border-brand-gold/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-serif font-bold text-lg text-brand-dark">Es Jeruk</h4>
+            <span class="text-brand-accent font-bold font-serif">Rp 16.000</span>
+          </div>
+          <p class="text-xs text-brand-slate/80 mb-4">Perasan buah jeruk asli dingin yang kaya vitamin C alami.</p>
+          <button onclick="addToCart('drink_3', 'Es Jeruk', 16000, 'Dingin')" class="w-full bg-brand-cream hover:bg-brand-gold text-brand-dark border border-brand-gold/20 hover:border-brand-gold py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+            <span>+</span> Tambah Minuman
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CART DRAWER / SIDE OVERLAY -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 pointer-events-none opacity-0">
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300" id="cart-content">
+      <!-- Cart Header -->
+      <div class="bg-brand-dark text-white p-4 flex items-center justify-between border-b border-brand-gold/20">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🛒</span>
+          <h3 class="font-serif font-bold text-lg text-brand-gold">Keranjang Pesanan</h3>
+        </div>
+        <button onclick="toggleCart()" class="text-brand-goldlight hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Cart Items list -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4" id="cart-items-container">
+        <!-- Kosong State -->
+        <div id="cart-empty-state" class="text-center py-12 text-brand-slate/60">
+          <span class="text-5xl block mb-3">🍽️</span>
+          <p class="font-medium text-brand-dark">Keranjang Anda masih kosong</p>
+          <p class="text-xs mt-1">Pilih menu lezat kami untuk mulai memesan.</p>
+        </div>
+        <!-- Dynamic Items Go Here -->
+      </div>
+
+      <!-- Checkout Details Form -->
+      <div class="border-t border-brand-gold/10 p-4 bg-brand-cream/50">
+        <h4 class="font-bold text-xs text-brand-slate uppercase tracking-wider mb-2.5">📋 Detail Pengiriman</h4>
+        <div class="space-y-2 text-xs">
+          <div>
+            <label class="block text-[10px] font-bold text-brand-dark/70 mb-1">Nama Pemesan *</label>
+            <input type="text" id="cust-name" placeholder="Contoh: Bripda Rian" class="w-full px-3 py-2 rounded-lg border border-brand-gold/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-brand-dark/70 mb-1">Detail Lokasi / Unit *</label>
+            <input type="text" id="cust-location" placeholder="Contoh: Gedung Ditreskrimum Lt. 2 / Kantin Polda" class="w-full px-3 py-2 rounded-lg border border-brand-gold/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-brand-dark/70 mb-1">Catatan Tambahan (Opsional)</label>
+            <input type="text" id="cust-notes" placeholder="Contoh: Kirim jam 12 siang, kuah dipisah, pedas gila" class="w-full px-3 py-2 rounded-lg border border-brand-gold/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Summary & Action Buttons -->
+      <div class="border-t border-brand-gold/20 p-4 bg-white">
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-medium text-brand-slate">Total Pembayaran:</span>
+          <span id="cart-total-price" class="font-serif font-bold text-2xl text-brand-accent">Rp 0</span>
+        </div>
+        
+        <button onclick="sendOrderViaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm">
+          <!-- WhatsApp Icon -->
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 1.981 14.115.95 11.482.95 6.05 1.95 1.623 6.322 1.62 11.75c-.001 1.705.452 3.37 1.31 4.867l-.988 3.605 3.705-.968zM17.847 14.5c-.32-.16-1.89-.93-2.185-1.04-.294-.11-.51-.16-.723.16-.214.32-.827 1.04-1.012 1.25-.186.213-.372.24-.692.08-.32-.16-1.353-.5-2.577-1.6-.953-.85-1.597-1.9-1.784-2.22-.187-.32-.02-.493.14-.654.145-.145.32-.375.48-.56.16-.188.213-.32.32-.533.11-.213.055-.4-.03-.56-.083-.16-.723-1.74-.99-2.38-.26-.63-.53-.54-.723-.55-.187-.01-.4-.01-.615-.01-.215 0-.56.08-.853.4-.293.32-1.12 1.1-1.12 2.68 0 1.58 1.147 3.11 1.307 3.32.16.213 2.257 3.448 5.468 4.83.763.33 1.36.527 1.824.674.767.243 1.464.21 2.015.127.614-.09 1.89-.77 2.155-1.48.266-.71.266-1.32.187-1.45-.08-.13-.294-.21-.613-.37z"/>
+          </svg>
+          Kirim Pesanan ke WhatsApp
+        </button>
+        <p class="text-[10px] text-center text-brand-slate/70 mt-2">
+          Kami akan menerima rincian menu secara otomatis dan merespons dalam sekejap.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-brand-dark border border-brand-gold text-brand-gold px-6 py-3.5 rounded-full shadow-2xl font-bold text-sm tracking-wide flex items-center gap-2 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <span>✨</span> <span id="toast-message">Item ditambahkan!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-dark text-white pt-12 pb-8 px-4 border-t border-brand-gold/20">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <svg class="w-8 h-8 text-brand-gold" viewBox="0 0 100 100" fill="currentColor">
+            <path d="M50 15 L85 38 L85 45 L50 32 L15 45 L15 38 Z" />
+            <path d="M50 28 L95 55 L90 60 L80 50 L80 85 L20 85 L20 50 L10 60 L5 55 Z" fill="currentColor" opacity="0.8"/>
+          </svg>
+          <span class="font-serif text-xl font-bold text-brand-gold">Alam Salero Nusantara</span>
+        </div>
+        <p class="text-xs text-brand-goldlight/70 leading-relaxed max-w-sm">
+          Menyajikan kelezatan cita rasa orisinil Minang dengan layanan pemesanan instan siap antar. Masakan higienis, halal, dan bumbu melimpah.
+        </p>
+      </div>
+      <div>
+        <h4 class="font-serif text-lg font-bold text-brand-gold mb-4">Informasi Kontak</h4>
+        <ul class="text-xs text-brand-goldlight/70 space-y-2">
+          <li class="flex items-center gap-2">
+            <span>📞</span> No. WhatsApp: <a href="tel:087738813613" class="hover:text-brand-gold underline">087738813613</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>📍</span> Lokasi Utama: Kantin Polda (Instan Delivery)
+          </li>
+          <li class="flex items-center gap-2">
+            <span>🕒</span> Senin - Jumat (Jam Kerja)
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-serif text-lg font-bold text-brand-gold mb-4">Pengantaran Cepat</h4>
+        <p class="text-xs text-brand-goldlight/70 leading-relaxed mb-3">
+          Siap antar langsung ke ruangan/unit Anda di lingkungan Polda. Memudahkan Anda menikmati hidangan maknyus tanpa repot keluar ruangan.
+        </p>
+        <span class="bg-brand-gold/10 text-brand-gold text-[10px] font-bold px-3 py-1 rounded-full border border-brand-gold/30">
+          Kantin POLDA Canteen Certified
+        </span>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto pt-6 border-t border-brand-gold/10 text-center text-xs text-brand-goldlight/50">
+      <p>&copy; 2026 Alam Salero Nusantara. Semua Hak Cipta Dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC FOR THE CART AND INTERACTIVE FEATURES -->
+  <script>
+    // State of the cart
+    let cart = [];
+
+    // Format currency to IDR
+    function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+      }).format(number);
+    }
+
+    // Toggle Cart Drawer
+    function toggleCart() {
+      const drawer = document.getElementById('cart-drawer');
+      const content = document.getElementById('cart-content');
+      
+      if (drawer.classList.contains('pointer-events-none')) {
+        // Open
+        drawer.classList.remove('pointer-events-none', 'opacity-0');
+        content.classList.remove('translate-x-full');
+      } else {
+        // Close
+        drawer.classList.add('pointer-events-none', 'opacity-0');
+        content.classList.add('translate-x-full');
+      }
+    }
+
+    // Add normal item to cart
+    function addToCart(id, name, price, variant = "") {
+      const existingItemIndex = cart.findIndex(item => item.id === id && item.variant === variant);
+
+      if (existingItemIndex > -1) {
+        cart[existingItemIndex].quantity += 1;
+      } else {
+        cart.push({
+          id: id,
+          name: name,
+          price: price,
+          variant: variant,
+          quantity: 1
+        });
+      }
+
+      updateCartUI();
+      showToast(`${name} ${variant ? '(' + variant + ')' : ''} dimasukkan ke keranjang!`);
+    }
+
+    // Add Package with variant selector logic
+    function addPackageWithVariant(id, name, price, radioGroupName) {
+      const radios = document.getElementsByName(radioGroupName);
+      let selectedVariant = "";
+      for (const radio of radios) {
+        if (radio.checked) {
+          selectedVariant = radio.value;
+          break;
+        }
+      }
+
+      if (!selectedVariant) {
+        selectedVariant = "Original";
+      }
+
+      // Unique ID combined with variant to separate in cart list if user orders different options
+      const cartItemId = `${id}_${selectedVariant.replace(/\s+/g, '_').toLowerCase()}`;
+      addToCart(cartItemId, name, price, selectedVariant);
+    }
+
+    // Change quantity in cart
+    function changeQty(id, variant, amount) {
+      const itemIndex = cart.findIndex(item => item.id === id && item.variant === variant);
+      if (itemIndex > -1) {
+        cart[itemIndex].quantity += amount;
+        if (cart[itemIndex].quantity <= 0) {
+          cart.splice(itemIndex, 1);
+        }
+        updateCartUI();
+      }
+    }
+
+    // Show custom toast notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.innerText = message;
+      
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2500);
+    }
+
+    // Update the entire Cart User Interface & Badge
+    function updateCartUI() {
+      const container = document.getElementById('cart-items-container');
+      const emptyState = document.getElementById('cart-empty-state');
+      
+      // Update badges
+      const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
+      const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+      document.getElementById('cart-count-badge').innerText = totalCount;
+      document.getElementById('cart-total-badge').innerText = formatRupiah(totalPrice);
+      document.getElementById('cart-total-price').innerText = formatRupiah(totalPrice);
+
+      // Remove previous items but keep empty state if empty
+      const itemsElements = container.querySelectorAll('.cart-item-row');
+      itemsElements.forEach(el => el.remove());
+
+      if (cart.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+
+        cart.forEach(item => {
+          const itemRow = document.createElement('div');
+          itemRow.className = 'cart-item-row flex items-center justify-between border-b border-brand-gold/10 pb-3';
+          itemRow.innerHTML = `
+            <div class="flex-1 pr-2">
+              <h5 class="font-bold text-sm text-brand-dark">${item.name}</h5>
+              ${item.variant ? `<p class="text-xs text-brand-accent font-semibold">${item.variant}</p>` : ''}
+              <p class="text-xs text-brand-slate">${formatRupiah(item.price)}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="changeQty('${item.id}', '${item.variant}', -1)" class="w-7 h-7 rounded-full bg-brand-cream border border-brand-gold/20 hover:border-brand-gold flex items-center justify-center font-bold text-sm text-brand-dark hover:bg-brand-gold transition-colors">-</button>
+              <span class="font-bold text-sm w-5 text-center">${item.quantity}</span>
+              <button onclick="changeQty('${item.id}', '${item.variant}', 1)" class="w-7 h-7 rounded-full bg-brand-cream border border-brand-gold/20 hover:border-brand-gold flex items-center justify-center font-bold text-sm text-brand-dark hover:bg-brand-gold transition-colors">+</button>
+            </div>
+          `;
+          container.appendChild(itemRow);
+        });
+      }
+    }
+
+    // Build WhatsApp message and redirect to the correct phone number
+    function sendOrderViaWhatsApp() {
+      if (cart.length === 0) {
+        showToast("⚠️ Keranjang belanja Anda masih kosong!");
+        return;
+      }
+
+      const custName = document.getElementById('cust-name').value.trim();
+      const custLocation = document.getElementById('cust-location').value.trim();
+      const custNotes = document.getElementById('cust-notes').value.trim();
+
+      if (!custName || !custLocation) {
+        showToast("⚠️ Harap lengkapi Nama & Detail Lokasi Pengiriman!");
+        return;
+      }
+
+      // Base WhatsApp text formation
+      let text = `*HALO ALAM SALERO NUSANTARA*\n`;
+      text += `Saya ingin memesan menu lezat berikut ini:\n\n`;
+      
+      let totalPrice = 0;
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+        text += `${index + 1}. *${item.name}* ${item.variant ? `(_${item.variant}_)` : ''}\n`;
+        text += `   [ ${item.quantity} porsi x ${formatRupiah(item.price)} ] ➔ *${formatRupiah(itemTotal)}*\n\n`;
+      });
+
+      text += `*---------------------------------*\n`;
+      text += `*TOTAL PEMBAYARAN:* *${formatRupiah(totalPrice)}*\n`;
+      text += `*---------------------------------*\n\n`;
+      
+      text += `*📋 DETAIL PENGIRIMAN:*\n`;
+      text += `• *Nama Pemesan:* ${custName}\n`;
+      text += `• *Lokasi / Unit:* ${custLocation}\n`;
+      if (custNotes) {
+        text += `• *Catatan Khusus:* ${custNotes}\n`;
+      }
+      
+      text += `\n_Catatan: Siap dikirimkan langsung ke Canteen / Ruangan Polda_`;
+
+      // Format WhatsApp API URL (Phone number 087738813613 -> 6287738813613)
+      const encodedText = encodeURIComponent(text);
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=6287738813613&text=${encodedText}`;
+
+      // Open in new tab
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
