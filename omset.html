@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Laporan Penjualan Alam Salero Nusantara</title>
+    <style>
+        :root {
+            --primary-color: #4A3AFF;
+            --secondary-color: #6C5DD3;
+            --background-color: #F4F5F9;
+            --card-background: #FFFFFF;
+            --text-color: #1F1F29;
+            --text-muted: #808191;
+            --border-color: #D1D5DB;
+            --success-color: #25D366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--card-background);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E5E7EB;
+            padding-bottom: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: #FFFFFF;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 58, 255, 0.1);
+        }
+
+        .dynamic-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .dynamic-row input[type="text"] {
+            flex: 2;
+        }
+
+        .dynamic-row input[type="number"] {
+            flex: 1;
+        }
+
+        .btn {
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-add {
+            background-color: var(--primary-color);
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-add:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background-color: #EF4444;
+            padding: 10px 12px;
+        }
+
+        .btn-danger:hover {
+            background-color: #DC2626;
+        }
+
+        .result-box {
+            background-color: #1E293B;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #38BDF8;
+            text-align: center;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: "Courier New", Courier, monospace;
+            color: #F8FAFC;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--success-color);
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20BA5A;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kantin Alam Salero Nusantara</h2>
+
+    <div class="form-group">
+        <label for="tanggal">Tanggal Laporan</label>
+        <input type="text" id="tanggal" placeholder="Contoh: 4 Juli 2026">
+    </div>
+
+    <div class="form-section">
+        <div class="section-title">Perhitungan Kas & Uang Fisik</div>
+        <div class="form-group">
+            <label for="uang_awal">Uang Awal (Rp)</label>
+            <input type="number" id="uang_awal" placeholder="Masukkan uang awal" oninput="calculate()">
+        </div>
+        <div class="form-group">
+            <label for="uang_real">Sisa Uang Tunai di Asep / Riil di Tas (Rp)</label>
+            <input type="number" id="uang_real" placeholder="Masukkan sisa uang di tas" oninput="calculate()">
+        </div>
+        <div class="form-group">
+            <label for="omset_qris">Omset QRIS (Rp)</label>
+            <input type="number" id="omset_qris" placeholder="Masukkan omset QRIS" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="section-title">
+            <span>Pengeluaran</span>
+            <button class="btn btn-add" type="button" onclick="addPengeluaranRow()">+ Tambah</button>
+        </div>
+        <div id="pengeluaran-container">
+            </div>
+    </div>
+
+    <div class="form-section">
+        <div class="section-title">
+            <span>Catatan</span>
+            <button class="btn btn-add" type="button" onclick="addCatatanRow()">+ Tambah</button>
+        </div>
+        <div id="catatan-container">
+            </div>
+    </div>
+
+    <div class="form-section">
+        <div class="section-title">
+            <span>Piutang</span>
+            <button class="btn btn-add" type="button" onclick="addPiutangRow()">+ Tambah</button>
+        </div>
+        <div id="piutang-container">
+            </div>
+    </div>
+
+    <div class="result-box">
+        <div class="result-title">Pratinjau Laporan WA (Sesuai Gambar)</div>
+        <pre id="preview-text"></pre>
+    </div>
+
+    <button class="btn btn-whatsapp" type="button" onclick="sendWhatsApp()">Kirim ke WhatsApp (087738813613)</button>
+</div>
+
+<script>
+    // Atur tanggal default hari ini otomatis
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const today = new Date().toLocaleDateString('id-ID', options);
+    document.getElementById('tanggal').value = today;
+
+    function addPengeluaranRow() {
+        const container = document.getElementById('pengeluaran-container');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+
+        const inputNama = document.createElement('input');
+        inputNama.type = 'text';
+        inputNama.placeholder = 'Nama Pengeluaran (Contoh: Belanja Pasar)';
+        inputNama.oninput = calculate;
+
+        const inputJumlah = document.createElement('input');
+        inputJumlah.type = 'number';
+        inputJumlah.placeholder = 'Jumlah (Rp)';
+        inputJumlah.oninput = calculate;
+
+        const btnHapus = document.createElement('button');
+        btnHapus.type = 'button';
+        btnHapus.className = 'btn btn-danger';
+        btnHapus.textContent = 'X';
+        btnHapus.onclick = function() { row.remove(); calculate(); };
+
+        row.appendChild(inputNama);
+        row.appendChild(inputJumlah);
+        row.appendChild(btnHapus);
+        container.appendChild(row);
+        calculate();
+    }
+
+    function addCatatanRow() {
+        const container = document.getElementById('catatan-container');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+
+        const inputCatatan = document.createElement('input');
+        inputCatatan.type = 'text';
+        inputCatatan.placeholder = 'Isi Catatan';
+        inputCatatan.style.flex = '1';
+        inputCatatan.oninput = calculate;
+
+        const btnHapus = document.createElement('button');
+        btnHapus.type = 'button';
+        btnHapus.className = 'btn btn-danger';
+        btnHapus.textContent = 'X';
+        btnHapus.onclick = function() { row.remove(); calculate(); };
+
+        row.appendChild(inputCatatan);
+        row.appendChild(btnHapus);
+        container.appendChild(row);
+        calculate();
+    }
+
+    function addPiutangRow() {
+        const container = document.getElementById('piutang-container');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+
+        const inputPiutang = document.createElement('input');
+        inputPiutang.type = 'text';
+        inputPiutang.placeholder = 'Isi Piutang (Contoh: Pak Inal)';
+        inputPiutang.style.flex = '1';
+        inputPiutang.oninput = calculate;
+
+        const btnHapus = document.createElement('button');
+        btnHapus.type = 'button';
+        btnHapus.className = 'btn btn-danger';
+        btnHapus.textContent = 'X';
+        btnHapus.onclick = function() { row.remove(); calculate(); };
+
+        row.appendChild(inputPiutang);
+        row.appendChild(btnHapus);
+        container.appendChild(row);
+        calculate();
+    }
+
+    function removeRow(button) {
+        button.parentElement.remove();
+        calculate();
+    }
+
+    function formatRupiah(num) {
+        return "Rp. " + Number(num).toLocaleString('id-ID').replace(/,/g, '.');
+    }
+
+    function calculate() {
+        const tanggal = document.getElementById('tanggal').value;
+        const uangAwal = Number(document.getElementById('uang_awal').value) || 0;
+        const uangReal = Number(document.getElementById('uang_real').value) || 0;
+        const omsetQris = Number(document.getElementById('omset_qris').value) || 0;
+
+        // Ambil Data Pengeluaran
+        let totalPengeluaran = 0;
+        let pengeluaranText = "";
+        const pengeluaranRows = document.getElementById('pengeluaran-container').querySelectorAll('.dynamic-row');
+        
+        pengeluaranRows.forEach(row => {
+            const inputs = row.querySelectorAll('input');
+            if (inputs.length >= 2) {
+                const nama = inputs[0].value;
+                const jumlah = Number(inputs[1].value) || 0;
+                if (nama || jumlah > 0) {
+                    totalPengeluaran += jumlah;
+                    pengeluaranText += "• " + nama + " : " + formatRupiah(jumlah) + "\n";
+                }
+            }
+        });
+
+        // Rumus Penghitungan Otomatis:
+        // Omset Tunai = Uang Real + Pengeluaran - Uang Awal
+        const omsetTunai = uangReal + totalPengeluaran - uangAwal;
+        const totalOmset = omsetTunai + omsetQris;
+        const jumlahUangTunai = omsetTunai - totalPengeluaran;
+
+        // Ambil Catatan
+        let catatanText = "";
+        const catatanRows = document.getElementById('catatan-container').querySelectorAll('.dynamic-row');
+        catatanRows.forEach(row => {
+            const input = row.querySelector('input');
+            if (input && input.value.trim() !== "") {
+                catatanText += "• " + input.value + "\n";
+            }
+        });
+
+        // Ambil Piutang
+        let piutangText = "";
+        const piutangRows = document.getElementById('piutang-container').querySelectorAll('.dynamic-row');
+        piutangRows.forEach(row => {
+            const input = row.querySelector('input');
+            if (input && input.value.trim() !== "") {
+                piutangText += "• " + input.value + "\n";
+            }
+        });
+
+        // Menyusun Laporan Terformat
+        let output = "📋 *LAPORAN PENJUALAN ALAM SALERO NUSANTARA*\n";
+        output += "_" + tanggal + "_\n\n";
+        
+        output += "*Pendapatan*\n";
+        output += "• Omset Tunai : " + formatRupiah(omsetTunai) + "\n";
+        output += "• Omset QRIS : " + formatRupiah(omsetQris) + "\n";
+        output += "Total Omset Hari Ini : " + formatRupiah(totalOmset) + "\n\n";
+
+        output += "*Pengeluaran*\n" + (pengeluaranText ? pengeluaranText : "• Tidak ada\n");
+        output += "Total Pengeluaran : " + formatRupiah(totalPengeluaran) + "\n\n";
+
+        output += "*Perhitungan Kas*\n";
+        output += "• Jumlah Uang Tunai : " + formatRupiah(jumlahUangTunai) + "\n";
+        output += "• Uang Awal : " + formatRupiah(uangAwal) + "\n";
+        output += "Sisa Uang Tunai di Asep : " + formatRupiah(uangReal) + "\n";
+
+        if (catatanText.trim() !== "") {
+            output += "\n*Catatan*\n" + catatanText;
+        }
+
+        if (piutangText.trim() !== "") {
+            output += "\n*Piutang*\n" + piutangText;
+        }
+
+        output += "\nTerima kasih 🙏";
+
+        document.getElementById('preview-text').textContent = output;
+    }
+
+    function sendWhatsApp() {
+        const rawText = document.getElementById('preview-text').textContent;
+        const phone = "6287738813613";
+        
+        // Konversi aman semua karakter agar tidak terpotong di HP
+        const formattedText = encodeURIComponent(rawText);
+        const url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + formattedText;
+        
+        window.open(url, '_blank');
+    }
+
+    // Inisialisasi perhitungan kosong pertama kali
+    calculate();
+</script>
+
+</body>
+</html>
