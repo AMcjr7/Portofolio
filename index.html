@@ -1,566 +1,304 @@
 <!DOCTYPE html>
-<html lang="id" style="scroll-behavior: smooth;">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMcjr7 Design Grafis - Portofolio Profesional</title>
+    <title>Portofolio Profesional | Asep Awaludin</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6.6.0 for Social and UI Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Update ke v6.5.2 agar ikon X-Twitter muncul -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <style>
-        /* ===== VARIABLES & GLOBAL ===== */
-        :root {
-            --bg-main: #020617;
-            --bg-card: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #38bdf8;
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --gradient-accent: linear-gradient(135deg, #0ea5e9, #38bdf8);
-        }
-
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
         body {
-            background: var(--bg-main);
-            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            line-height: 1.7; /* Diperbesar agar tulisan lebih bernapas */
-            letter-spacing: 0.2px;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #050505;
+            color: #ffffff;
         }
 
-        /* Desktop Only Cursor */
-        @media (min-width: 1024px) {
-            body { cursor: none; }
-            .cursor {
-                position: fixed; width: 10px; height: 10px;
-                background: var(--accent); border-radius: 50%;
-                pointer-events: none; transform: translate(-50%, -50%);
-                z-index: 9999; transition: transform 0.1s;
-            }
-            .cursor-trail {
-                position: fixed; width: 35px; height: 35px;
-                border: 1px solid rgba(56, 189, 248, 0.5); border-radius: 50%;
-                pointer-events: none; transform: translate(-50%, -50%);
-                opacity: 0.5; z-index: 9998;
-            }
+        /* Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* ===== NAVBAR ===== */
-        nav {
-            position: fixed; top: 0; width: 100%;
-            background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px);
-            padding: 18px 5%; display: flex; justify-content: space-between;
-            align-items: center; z-index: 1000; border-bottom: 1px solid var(--border-glass);
+        /* Glassmorphism Classes with adjusted blur to let background matrix shine through perfectly */
+        .glass-panel {
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .glass-link {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .glass-link:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .social-icon {
             transition: all 0.3s ease;
         }
-        .logo { font-weight: 800; color: var(--accent); font-size: 1.5rem; text-decoration: none; letter-spacing: -0.5px; }
         
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
-        .nav-links li a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: 0.3s; }
-        .nav-links li a:hover, .nav-links li a.active { color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
-        .menu-toggle span { width: 28px; height: 3px; background: var(--text-main); border-radius: 3px; transition: 0.3s; }
-
-        /* ===== LAYOUT & CARDS ===== */
-        section { padding: 100px 5% 60px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
-        
-        .card { 
-            background: var(--bg-card); 
-            padding: 40px; 
-            border-radius: 24px; 
-            border: 1px solid var(--border-glass); 
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        .social-icon:hover {
+            transform: translateY(-5px);
+            color: #818cf8;
+            text-shadow: 0 0 10px rgba(129, 140, 248, 0.5);
         }
-        
-        .title { font-size: clamp(2.2rem, 5vw, 2.8rem); font-weight: 800; margin-bottom: 50px; text-align: center; letter-spacing: -1px; }
-        .title span { color: var(--accent); }
 
-        /* ===== HOME SECTION ===== */
-        #home { text-align: center; }
-        #home h1 { font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1.15; margin-bottom: 25px; letter-spacing: -1.5px; }
-        .rainbow-text {
-            background: linear-gradient(270deg, #38bdf8, #818cf8, #c084fc, #e879f9, #38bdf8);
-            background-size: 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: move-bg 8s linear infinite; font-weight: 800;
+        /* Profil Image Glow */
+        .profile-img-container {
+            position: relative;
         }
-        @keyframes move-bg { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-
-        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
-        .cta-btn { 
-            text-decoration: none; padding: 14px 30px; border-radius: 50px; font-weight: 600; 
-            font-size: 1rem; transition: all 0.3s ease; display: inline-block; min-width: 160px;
-        }
-        .cta-primary { background: var(--text-main); color: var(--bg-main); }
-        .cta-secondary { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-glass); }
-        .cta-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        .cta-primary:hover { background: var(--accent); }
-        .cta-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* ===== ABOUT SECTION ===== */
-        .about-wrapper { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: center; }
-        .profile-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 24px; border: 2px solid rgba(56, 189, 248, 0.3); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        
-        .about-text h3 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.5px; }
-        .about-text .role { color: var(--accent); font-weight: 600; margin-bottom: 20px; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
-        .about-text .desc { color: var(--text-muted); margin-bottom: 35px; font-size: 1.05rem; }
-
-        .skill-item { margin-bottom: 20px; }
-        .skill-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; font-weight: 500; }
-        .skill-bar { height: 6px; background: #1e293b; border-radius: 10px; overflow: hidden; }
-        .skill-fill { height: 100%; background: var(--gradient-accent); border-radius: 10px; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
-        
-        .review-link { display: inline-block; margin-left: 8px; color: var(--accent); font-size: 0.85rem; text-decoration: none; border-bottom: 1px dashed var(--accent); padding-bottom: 2px; }
-        .review-link:hover { color: #fff; border-color: #fff; }
-
-        /* ===== JASA SECTION ===== */
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .service-btn {
-            background: rgba(255, 255, 255, 0.03); color: var(--text-main);
-            padding: 20px 15px; border-radius: 16px; text-decoration: none; font-weight: 600;
-            text-align: center; transition: all 0.3s ease; font-size: 1rem; border: 1px solid var(--border-glass);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-        }
-        .service-btn i { font-size: 1.8rem; color: var(--accent); margin-bottom: 5px; }
-        .service-btn:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(56, 189, 248, 0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-
-        .promo-banner { margin-top: 40px; text-align: center; font-size: 1.05rem; padding: 20px; border-radius: 16px; background: linear-gradient(90deg, rgba(15,23,42,0) 0%, rgba(56,189,248,0.1) 50%, rgba(15,23,42,0) 100%); }
-
-        /* ===== KONTAK & DONASI SECTION ===== */
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        
-        .form-section h3, .info-section h3 { font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; letter-spacing: -0.5px; }
-        
-        .input_field { 
-            width: 100%; padding: 15px 18px; background: rgba(0, 0, 0, 0.2); 
-            border: 1px solid var(--border-glass); color: white; border-radius: 12px; 
-            margin-bottom: 15px; outline: none; transition: 0.3s; font-size: 0.95rem; 
-        }
-        .input_field:focus { border-color: var(--accent); background: rgba(56, 189, 248, 0.05); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1); }
-        
-        .btn-submit { 
-            background: var(--gradient-accent); color: var(--bg-main); border: none; 
-            padding: 16px; border-radius: 12px; font-weight: 800; cursor: pointer; 
-            width: 100%; font-size: 1rem; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3); }
-        
-        .contact-info-box { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
-        .contact-icon { width: 45px; height: 45px; background: rgba(56, 189, 248, 0.1); color: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem; }
-        .contact-text h4 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
-        .contact-text p { font-size: 0.9rem; color: var(--text-muted); }
-
-        /* Donasi / Payment Styles */
-        .donasi-box {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-glass);
-            padding: 18px 20px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            transition: 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .donasi-box:hover { border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.05); transform: translateY(-2px); }
-        .bank-info strong { display: block; font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 4px; }
-        .bank-info .account-name { display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .bank-info .account-num { display: block; font-size: 1.15rem; color: var(--accent); font-family: monospace; letter-spacing: 1.5px; margin-top: 6px; font-weight: 600; }
-        
-        .btn-copy {
-            background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid var(--border-glass);
-            padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
-        }
-        .btn-copy:hover { background: var(--text-main); color: var(--bg-main); transform: scale(1.05); }
-
-        /* ===== FOOTER & SOCIAL MEDIA ===== */
-        footer { padding: 60px 5% 30px; text-align: center; border-top: 1px solid var(--border-glass); margin-top: 50px; background: rgba(15, 23, 42, 0.3); }
-        
-        .footer-heading { font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom: 25px; letter-spacing: 0.5px; }
-
-        .social-footer-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-        .social-footer-row a {
-            color: var(--text-muted);
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
+        .profile-img-container::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            background: linear-gradient(45deg, #4f46e5, #ec4899, #8b5cf6);
             border-radius: 50%;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .social-footer-row a:hover {
-            color: #fff;
-            border-color: var(--accent);
-            background: var(--accent);
-            transform: translateY(-5px) rotate(8deg);
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+            z-index: -1;
+            filter: blur(15px);
+            opacity: 0.7;
+            animation: pulse-glow 3s infinite alternate;
         }
 
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; margin: 0 10px; transition: 0.3s; }
-        .footer-links a:hover { color: var(--accent); }
-
-        .marquee { overflow: hidden; white-space: nowrap; padding: 15px 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px dashed var(--border-glass); margin-top: 20px; }
-        .marquee-inner { display: inline-block; animation: marquee 25s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- Toast Notification --- */
-        #toast {
-            visibility: hidden; min-width: 250px; background: var(--text-main); color: var(--bg-main);
-            text-align: center; border-radius: 12px; padding: 16px 20px; position: fixed; z-index: 1000;
-            bottom: 40px; left: 50%; transform: translateX(-50%); font-weight: 600; font-size: 0.95rem;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        @keyframes pulse-glow {
+            0% { opacity: 0.5; filter: blur(10px); }
+            100% { opacity: 0.9; filter: blur(20px); }
         }
-        #toast.show { visibility: visible; animation: fadein 0.4s, fadeout 0.4s 2.5s; }
-        @keyframes fadein { from { bottom: 0; opacity: 0; transform: translate(-50%, 20px); } to { bottom: 40px; opacity: 1; transform: translate(-50%, 0); } }
-        @keyframes fadeout { from { bottom: 40px; opacity: 1; transform: translate(-50%, 0); } to { bottom: 0; opacity: 0; transform: translate(-50%, 20px); } }
 
-        /* ===== MOBILE RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-            
-            .nav-links {
-                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(15, 23, 42, 0.98);
-                flex-direction: column; padding: 30px 20px; gap: 20px; border-bottom: 1px solid var(--border-glass);
-                display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        /* Animated Gradient Text for Title */
+        .animate-gradient-text {
+            background: linear-gradient(270deg, #00f2fe, #4facfe, #f093fb, #f5576c, #00f2fe);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 6s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Entrance Animation */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .nav-links.active { display: flex; }
-
-            .about-wrapper, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
-            .profile-img { max-width: 280px; margin: 0 auto; display: block; }
-            
-            section { padding-top: 120px; padding-bottom: 40px; }
-            .card { padding: 25px; }
-            .title { margin-bottom: 30px; }
-            
-            .cursor, .cursor-trail { display: none; }
-            .contact-grid { display: flex; flex-direction: column-reverse; } /* Info donasi di atas form saat mobile */
         }
     </style>
 </head>
-<body>
+<body class="antialiased min-h-screen flex items-center justify-center p-4 sm:p-8 lg:p-12">
 
-    <div class="cursor"></div>
-    <div class="cursor-trail"></div>
+    <!-- Background Matrix Digital Rain Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-    <nav id="navbar">
-        <a href="#home" class="logo">AMcjr7.</a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#tentang">Tentang</a></li>
-            <li><a href="#jasa">Jasa</a></li>
-            <li><a href="#kontak">Kontak</a></li>
-            <li><a href="pengalaman.html">Pengalaman</a></li>
-            <li><a href="amcjr7.html" style="color: var(--bg-main); background: var(--text-main); padding: 8px 20px; border-radius: 30px; font-weight: 700;">Sosial Media</a></li>
-        </ul>
-    </nav>
-
-    <!-- SECTION 1: HOME -->
-    <section id="home">
-        <div class="container">
-            <h1 class="rainbow-text">AMcjr7 Design Grafis</h1>
-            <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 650px; margin: 0 auto 35px;">
-                Mewujudkan desain profesional, pengerjaan cepat, dan berkualitas tinggi untuk kebutuhan bisnis maupun personal Anda.
-            </p>
-            <div class="btn-group">
-                <a href="#jasa" class="cta-btn cta-primary">Cek Layanan</a>
-                <a href="#kontak" class="cta-btn cta-secondary">Hubungi Saya</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 2: TENTANG -->
-    <section id="tentang">
-        <div class="container">
-            <h2 class="title">Tentang <span>& Keahlian</span></h2>
-            <div class="about-wrapper card">
-                <img src="asep.jpeg" alt="Asep Awaludin" class="profile-img" onerror="this.src='https://via.placeholder.com/400x400?text=Asep+Awaludin'">
-                <div class="about-text">
-                    <h3>Asep Awaludin</h3>
-                    <p class="role">Freelance Designer & IT Support</p>
-                    <p class="desc">
-                        Berfokus pada solusi visual kreatif dan dukungan teknis. Memiliki dedikasi tinggi untuk memberikan hasil yang rapi, komunikatif, dan cepat. Saat ini berdomisili di Cilacap, Jawa Tengah.
-                    </p>
-                    
-                    <div class="skill-item">
-                        <div class="skill-header"><span>Adobe Photoshop</span><span>95%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>CorelDRAW</span><span>90%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>Web Design <a href="review.html" class="review-link"><i class="fa-solid fa-link"></i> Review Web</a></span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>Mengetik 10 Jari</span><span>100%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width: 100%;"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 3: JASA -->
-    <section id="jasa">
-        <div class="container">
-            <h2 class="title">Layanan <span>Terbaik</span></h2>
-            <div class="service-grid">
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Design%20Logo" target="_blank">
-                    <i class="fa-solid fa-pen-nib"></i> Design Logo
-                </a>
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Design%20Poster" target="_blank">
-                    <i class="fa-solid fa-image"></i> Design Poster
-                </a>
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Undangan%20Digital" target="_blank">
-                    <i class="fa-solid fa-envelope-open-text"></i> Undangan Digital
-                </a>
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Editing%20Word" target="_blank">
-                    <i class="fa-solid fa-file-word"></i> Editing Word
-                </a>
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Hapus%20Background%20Foto" target="_blank">
-                    <i class="fa-solid fa-object-group"></i> Hapus BG Foto
-                </a>
-                <a class="service-btn" href="https://wa.me/6287738813613?text=Halo%20saya%20ingin%20Order%20Install%20OS" target="_blank">
-                    <i class="fa-solid fa-laptop-code"></i> Install Win/Linux
-                </a>
-            </div>
-            
-            <div class="promo-banner">
-                <p>🚀 <strong>PROSES KILAT</strong> &nbsp;•&nbsp; 💰 Harga Bersahabat &nbsp;•&nbsp; ✅ Hasil Profesional</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 4: KONTAK & DONASI -->
-    <section id="kontak">
-        <div class="container">
-            <h2 class="title">Kontak <span>& Donasi</span></h2>
-            
-            <div class="contact-grid">
-                
-                <!-- Kiri: Form Pesan -->
-                <div class="card form-section" style="margin-bottom: 0;">
-                    <h3>Tinggalkan Pesan</h3>
-                    <form method="post" action="https://script.google.com/macros/s/AKfycbwrWKhgDvuRr06RPOk8sUBczRe1o9BHwDUjF8jBytuymwMDVKroi-ihRs654RqfMvs3/exec">
-                        <input type="text" name="author" class="input_field" placeholder="Nama Lengkap Anda" required>
-                        <input type="email" name="email" class="input_field" placeholder="Alamat Email Aktif" required>
-                        <textarea name="text" class="input_field" style="height: 140px; resize: none;" placeholder="Tulis pesan atau kebutuhan desain Anda di sini..." required></textarea>
-                        <button type="submit" class="btn-submit">Kirim Pesan <i class="fa-regular fa-paper-plane" style="margin-left: 5px;"></i></button>
-                    </form>
-                </div>
-
-                <!-- Kanan: Info Kontak & Payment/Donasi -->
-                <div class="info-section" style="display: flex; flex-direction: column; gap: 25px;">
-                    
-                    <!-- Kotak Info Lokasi & WA -->
-                    <div class="card" style="margin-bottom: 0; padding: 35px;">
-                        <h3>Informasi Kontak</h3>
-                        <div class="contact-info-box">
-                            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="contact-text">
-                                <h4>Lokasi Operasional</h4>
-                                <p>Cilacap, Jawa Tengah, Indonesia</p>
-                            </div>
-                        </div>
-                        <div class="contact-info-box">
-                            <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                            <div class="contact-text">
-                                <h4>WhatsApp Fast Respon</h4>
-                                <p>0877-3881-3613</p>
-                            </div>
-                        </div>
-                        <a href="https://wa.me/6287738813613" target="_blank" class="btn-submit" style="display: block; text-align: center; text-decoration: none; background: #25D366; color: white; margin-top: 15px;">
-                            <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
-                        </a>
-                    </div>
-
-                    <!-- Kotak Donasi / Pembayaran -->
-                    <div class="card" style="margin-bottom: 0; padding: 35px; background: linear-gradient(145deg, #0f172a, #1e293b); border: 1px solid rgba(56, 189, 248, 0.2);">
-                        <h3 style="color: var(--accent);">Dukungan & Pembayaran</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Setiap apresiasi sangat berarti untuk terus berkarya.</p>
-                        
-                        <!-- Bank Jago -->
-                        <div class="donasi-box">
-                            <div class="bank-info">
-                                <strong>Bank Jago</strong>
-                                <span class="account-name">A/N Asep Awaludin</span>
-                                <span class="account-num">500174000875</span>
-                            </div>
-                            <button class="btn-copy" onclick="copyText('500174000875')"><i class="fa-regular fa-copy"></i> Salin</button>
-                        </div>
-
-                        <!-- E-Wallets -->
-                        <div class="donasi-box">
-                            <div class="bank-info">
-                                <strong>DANA / GOPAY / OVO</strong>
-                                <span class="account-name">A/N Asep Awaludin</span>
-                                <span class="account-num">087738813613</span>
-                            </div>
-                            <button class="btn-copy" onclick="copyText('087738813613')"><i class="fa-regular fa-copy"></i> Salin</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER & SOCIAL MEDIA -->
-    <footer>
-        <div class="container">
-            <h4 class="footer-heading">Mari Terhubung Lebih Dekat</h4>
-            
-            <!-- SOCIAL MEDIA 1 BARIS -->
-            <div class="social-footer-row">
-                <a href="https://mobile.capcutshare.com/sv2/ZSHQha4wL/" target="_blank" title="CapCut"><i class="fa-solid fa-video"></i></a>
-                <a href="https://www.tiktok.com/@amcjr7?_r=1&_t=ZS-95QKNfRq7HT" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://www.instagram.com/asepawaludin13?igsh=MWdsbmwyMGdvY3gwbA==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.facebook.com/share/1HexTqEaLB/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <!-- Ikon X (Twitter) sekarang akan muncul dengan baik -->
-                <a href="https://x.com/Asepkreatif14" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://t.me/Asepkreatif14" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-                <a href="https://wa.me/6287738813613" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-
-            <div class="footer-links">
-                <a href="keuanganku.html">Dashboard Keuangan</a>
-                <span style="color: var(--border-glass);">|</span>
-                <a href="pengalaman.html">Pengalaman Kerja</a>
-            </div>
-
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 15px;">© 2025 Asep Awaludin - AMcjr7 Design</p>
-        </div>
+    <!-- Main Content Container (Auto-Fit for Phone, Tablet, & PC) -->
+    <main class="w-full max-w-xl glass-panel rounded-3xl p-6 sm:p-10 lg:p-12 relative z-10 flex flex-col items-center text-center fade-in-up mx-auto my-auto mt-6 mb-6">
         
-        <div class="marquee">
-            <div class="marquee-inner">
-                <span>📢 Desain Logo • Poster • Undangan Digital • Pengetikan Cepat • Instalasi OS • Terima Kasih Atas Kepercayaan Anda &nbsp;&nbsp;⭐&nbsp;&nbsp; </span>
-                <span>📢 Desain Logo • Poster • Undangan Digital • Pengetikan Cepat • Instalasi OS • Terima Kasih Atas Kepercayaan Anda &nbsp;&nbsp;⭐&nbsp;&nbsp; </span>
-            </div>
+        <!-- Profile Section -->
+        <div class="profile-img-container mb-6 w-28 h-28 sm:w-32 sm:h-32 rounded-full fade-in-up delay-1">
+            <!-- PENGATURAN FOTO: Mengarah langsung ke file asep.jpeg di repo GitHub Anda -->
+            <img src="asep.jpeg" alt="Asep Awaludin" class="w-full h-full object-cover rounded-full border-2 border-white/10" onerror="this.src='https://placehold.co/400x400/2a2a2a/ffffff?text=AA'">
         </div>
-    </footer>
 
-    <!-- Toast Notification (Popup Salin) -->
-    <div id="toast"><i class="fa-solid fa-check-circle"></i> Nomor berhasil disalin!</div>
+        <!-- Animated Colorful Title -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3 tracking-tight fade-in-up delay-1 animate-gradient-text">
+            Asep Awaludin
+        </h1>
+        
+        <p class="text-gray-300 text-sm sm:text-base font-light mb-6 max-w-md mx-auto leading-relaxed fade-in-up delay-1">
+            Pengembang IT Autodidak | Terus berinovasi dan merangkai solusi melalui eksplorasi teknologi tanpa batas dari berbagai sumber.
+        </p>
+
+        <!-- Social Icons Top -->
+        <div class="mb-8 flex flex-wrap justify-center gap-4 sm:gap-6 fade-in-up delay-2">
+            <a href="https://www.facebook.com/share/1HexTqEaLB/" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-[#1877F2]" aria-label="Facebook">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@amcjr7?_r=1&_t=ZS-95QKNfRq7HT" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-white" aria-label="TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/Asepkreatif14" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-[#229ED9]" aria-label="Telegram">
+                <i class="fa-brands fa-telegram"></i>
+            </a>
+            <a href="https://x.com/Asepkreatif14" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-white" aria-label="X Twitter">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/asepawaludin13?igsh=MWdsbmwyMGdvY3gwbA==" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-[#E4405F]" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/6287738813613" target="_blank" class="social-icon text-gray-400 text-2xl hover:text-[#25D366]" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Links Section (Updated: Removed Qurban & Review) -->
+        <div class="w-full space-y-3 sm:space-y-4 flex flex-col items-center">
+            
+            <a href="amcjr7.html" class="glass-link w-full py-4 px-6 rounded-2xl flex items-center justify-between text-white text-decoration-none group fade-in-up delay-3">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-code text-xl text-blue-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-medium tracking-wide">AMCJR7 Portofolio</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <a href="cv.html" class="glass-link w-full py-4 px-6 rounded-2xl flex items-center justify-between text-white text-decoration-none group fade-in-up delay-3">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-id-card text-xl text-cyan-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-medium tracking-wide">Curriculum Vitae (CV)</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <a href="pengalaman.html" class="glass-link w-full py-4 px-6 rounded-2xl flex items-center justify-between text-white text-decoration-none group fade-in-up delay-3">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-briefcase text-xl text-yellow-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-medium tracking-wide">Pengalaman Kerja</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <a href="jasa.html" class="glass-link w-full py-4 px-6 rounded-2xl flex items-center justify-between text-white text-decoration-none group fade-in-up delay-4">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-laptop-code text-xl text-indigo-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-medium tracking-wide">Layanan & Jasa IT</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <a href="donasi.html" class="glass-link w-full py-4 px-6 rounded-2xl flex items-center justify-between text-white text-decoration-none group fade-in-up delay-4">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-hand-holding-heart text-xl text-pink-400 group-hover:text-white transition-colors"></i>
+                    <span class="font-medium tracking-wide">Donasi / Support</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+        </div>
+
+    </main>
 
     <script>
-        // --- COPY REKENING FUNCTION ---
-        function copyText(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        // --- MOBILE MENU TOGGLE ---
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinksContainer = document.querySelector('.nav-links');
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
         
-        menuToggle.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('active');
-        });
+        let width, height;
+        let drops = [];
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksContainer.classList.remove('active');
-            });
-        });
-
-        // --- NAVBAR SCROLL EFFECT ---
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.style.padding = "12px 5%";
-                nav.style.background = "rgba(2, 6, 23, 0.95)";
-            } else {
-                nav.style.padding = "18px 5%";
-                nav.style.background = "rgba(2, 6, 23, 0.85)";
-            }
-        });
-
-        // --- CUSTOM CURSOR (DESKTOP ONLY) ---
-        if (window.innerWidth >= 1024) {
-            const cursor = document.querySelector('.cursor');
-            const trail = document.querySelector('.cursor-trail');
-            document.addEventListener('mousemove', e => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                trail.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 250, fill: "forwards" });
-            });
-            
-            // Hover effect for cursor
-            const hoverElements = document.querySelectorAll('a, button, .service-btn, .donasi-box');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = "translate(-50%, -50%) scale(1.5)";
-                    cursor.style.background = "transparent";
-                    cursor.style.border = "2px solid var(--accent)";
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = "translate(-50%, -50%) scale(1)";
-                    cursor.style.background = "var(--accent)";
-                    cursor.style.border = "none";
-                });
-            });
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initAnimation();
         }
 
-        // --- ACTIVE LINK ON SCROLL ---
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-links li a');
-        window.addEventListener('scroll', () => {
-            let current = "";
-            sections.forEach(sec => {
-                const sectionTop = sec.offsetTop;
-                if (pageYOffset >= sectionTop - 180) {
-                    current = sec.getAttribute('id');
+        window.addEventListener('resize', resize);
+
+        class MatrixDrop {
+            constructor(x) {
+                this.x = x;
+                this.reset(true);
+            }
+
+            reset(isInit = false) {
+                this.y = isInit ? Math.random() * height : -Math.random() * 200 - 50;
+                this.speed = Math.random() * 1.5 + 0.8; // Slow motion santai
+                this.length = Math.random() * 100 + 60;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y - this.length > height) {
+                    this.reset();
                 }
-            });
-            navLinks.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
-        });
+            }
+
+            draw() {
+                let grad = ctx.createLinearGradient(this.x, this.y - this.length, this.x, this.y);
+                grad.addColorStop(0, 'rgba(5, 5, 5, 0)');
+                grad.addColorStop(1, `rgba(167, 139, 250, ${this.opacity})`);
+
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y - this.length);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 1.5;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+
+                // Kepala titik putih terang
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffffff';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initAnimation() {
+            drops = [];
+            let columnSpacing = (width < 768) ? 40 : 55; 
+            let columns = Math.floor(width / columnSpacing);
+            
+            for (let i = 0; i < columns; i++) {
+                let x = (i * columnSpacing) + (columnSpacing / 2);
+                drops.push(new MatrixDrop(x));
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let drop of drops) {
+                drop.update();
+                drop.draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        resize();
+        animate();
     </script>
 </body>
 </html>
