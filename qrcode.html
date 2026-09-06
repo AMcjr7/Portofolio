@@ -52,7 +52,7 @@
             gap: 20px;
         }
 
-        /* Layout 2 kolom untuk layar ≥ 768px (laptop/PC) */
+        /* Layout 2 kolom untuk layar ≥ 768px */
         @media (min-width: 768px) {
             .portfolio-card {
                 padding: 32px;
@@ -81,55 +81,29 @@
             }
         }
 
-        /* Penyesuaian untuk layar sangat kecil (HP) */
+        /* Penyesuaian untuk HP */
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            .portfolio-card {
-                padding: 16px;
-                border-radius: 14px;
-            }
-            .qr-header h2 {
-                font-size: 1.3rem;
-            }
-            .tabs {
-                gap: 6px;
-            }
-            .tab-btn {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-            .btn {
-                padding: 12px 16px;
-                font-size: 0.9rem;
-            }
-            .color-settings {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            .preview-section {
-                position: static; /* Nonaktifkan sticky di mobile */
-            }
-            .qr-box-wrapper {
-                padding: 15px;
-            }
+            body { padding: 10px; }
+            .portfolio-card { padding: 16px; border-radius: 14px; }
+            .qr-header h2 { font-size: 1.3rem; }
+            .tabs { gap: 6px; }
+            .tab-btn { padding: 8px 12px; font-size: 0.8rem; }
+            .btn { padding: 12px 16px; font-size: 0.9rem; }
+            .color-settings { grid-template-columns: 1fr; gap: 10px; }
+            .preview-section { position: static; }
+            .qr-box-wrapper { padding: 15px; }
         }
 
         .qr-header {
             margin-bottom: 24px;
             text-align: center;
         }
-
-        @media (min-width: 768px) {
-            .qr-header { text-align: left; }
-        }
+        @media (min-width: 768px) { .qr-header { text-align: left; } }
 
         .qr-header h2 {
             margin: 0 0 8px 0;
             font-size: 1.5rem;
             font-weight: 600;
-            /* Fallback warna solid */
             color: var(--accent-main);
             background: var(--accent-gradient);
             -webkit-background-clip: text;
@@ -150,12 +124,9 @@
             gap: 8px;
             margin-bottom: 24px;
             padding-bottom: 12px;
-            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
+            scrollbar-width: none;
         }
-
-        .tabs::-webkit-scrollbar {
-            display: none; /* Sembunyikan scrollbar Chrome/Safari/Edge */
-        }
+        .tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
             flex: 0 0 auto;
@@ -169,7 +140,6 @@
             font-size: 0.85rem;
             transition: all 0.2s;
         }
-
         .tab-btn.active {
             background: rgba(56, 189, 248, 0.15);
             border-color: var(--accent-main);
@@ -177,14 +147,10 @@
             font-weight: 600;
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
 
         .input-group { margin-bottom: 16px; }
-
         .input-group label {
             display: block;
             margin-bottom: 8px;
@@ -232,12 +198,7 @@
             padding-top: 15px;
             border-top: 1px solid var(--card-border);
         }
-
-        @media (max-width: 480px) {
-            .color-settings {
-                grid-template-columns: 1fr; /* Satu kolom di HP */
-            }
-        }
+        @media (max-width: 480px) { .color-settings { grid-template-columns: 1fr; } }
 
         .color-picker { display: flex; align-items: center; gap: 10px; }
 
@@ -299,7 +260,6 @@
             width: 100%;
             height: 100%;
         }
-
         #qrcode img, #qrcode canvas { max-width: 100%; max-height: 100%; border-radius: 4px; }
 
         .placeholder-text {
@@ -358,15 +318,12 @@
 
     <div class="portfolio-card">
         <div class="app-layout">
-            
-            <!-- Kolom Kiri: Formulir & Pengaturan -->
             <div class="form-section">
                 <div class="qr-header">
                     <h2>QR Code Generator</h2>
                     <p>Buat kode QR kustom gratis, selamanya tanpa iklan.</p>
                 </div>
                 
-                <!-- Menu Tab -->
                 <div class="tabs">
                     <button class="tab-btn active" data-target="tab-url">Tautan / URL</button>
                     <button class="tab-btn" data-target="tab-wa">WhatsApp</button>
@@ -374,7 +331,6 @@
                     <button class="tab-btn" data-target="tab-email">Email</button>
                 </div>
 
-                <!-- Konten Tab URL -->
                 <div class="tab-content active" id="tab-url">
                     <div class="input-group">
                         <label>Masukkan Tautan (Website / Profil Medsos)</label>
@@ -382,7 +338,6 @@
                     </div>
                 </div>
 
-                <!-- Konten Tab WhatsApp -->
                 <div class="tab-content" id="tab-wa">
                     <div class="input-group">
                         <label>Nomor WhatsApp (Gunakan kode negara, ex: 62)</label>
@@ -394,7 +349,6 @@
                     </div>
                 </div>
 
-                <!-- Konten Tab Wi-Fi -->
                 <div class="tab-content" id="tab-wifi">
                     <div class="input-group">
                         <label>Nama Jaringan (SSID)</label>
@@ -414,7 +368,6 @@
                     </div>
                 </div>
 
-                <!-- Konten Tab Email -->
                 <div class="tab-content" id="tab-email">
                     <div class="input-group">
                         <label>Alamat Email Tujuan</label>
@@ -449,7 +402,6 @@
                 <button class="btn" id="generate-btn">Buat QR Code Sekarang</button>
             </div>
 
-            <!-- Kolom Kanan: Area Pratinjau & Tombol Unduh -->
             <div class="preview-section">
                 <div class="qr-box-wrapper" id="qr-wrapper">
                     <span class="placeholder-text" id="placeholder">Pratinjau QR Code<br>Akan Muncul Di Sini</span>
@@ -461,7 +413,6 @@
                     *Jika tombol gagal merespons, klik tahan pada gambar QR untuk menyimpannya manual.
                 </p>
             </div>
-
         </div>
 
         <div class="footer-copyright">
@@ -488,9 +439,7 @@
             toast.className = `toast ${isError ? 'error' : ''}`;
             toast.textContent = message;
             toastContainer.appendChild(toast);
-            
             setTimeout(() => toast.classList.add('show'), 10);
-
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 300);
@@ -501,7 +450,6 @@
             btn.addEventListener('click', () => {
                 tabBtns.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(c => c.classList.remove('active'));
-                
                 btn.classList.add('active');
                 const targetId = btn.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
@@ -511,7 +459,6 @@
 
         function getQRData() {
             let dataString = "";
-
             if (currentTab === 'tab-url') {
                 const url = document.getElementById('input-url').value.trim();
                 if (!url) throw new Error("Tautan/URL tidak boleh kosong!");
@@ -541,7 +488,6 @@
                 if (!emailRegex.test(to)) throw new Error("Format email tidak valid!");
                 dataString = `mailto:${to}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
             }
-
             return dataString;
         }
 
@@ -559,8 +505,8 @@
                 try {
                     qrInstance = new QRCode(qrcodeDiv, {
                         text: qrText,
-                        width: 700,
-                        height: 700,
+                        width: 500,
+                        height: 500,
                         colorDark: qrColor,
                         colorLight: bgColor,
                         correctLevel: QRCode.CorrectLevel.H
@@ -604,7 +550,6 @@
 
                 ctx.fillStyle = bgColor;
                 ctx.fillRect(logoPos - padding, logoPos - padding, logoSize + (padding * 2), logoSize + (padding * 2));
-
                 ctx.drawImage(img, logoPos, logoPos, logoSize, logoSize);
 
                 const qrImg = qrcodeDiv.querySelector('img');
@@ -632,30 +577,48 @@
         generateBtn.addEventListener('click', generateQR);
 
         downloadBtn.addEventListener('click', function () {
-            const canvas = qrcodeDiv.querySelector('canvas');
-            const img = qrcodeDiv.querySelector('img');
+            // Ambil canvas QR yang sudah jadi (mungkin sudah berisi logo)
+            let sourceCanvas = qrcodeDiv.querySelector('canvas');
+            const qrImg = qrcodeDiv.querySelector('img');
             
-            let imageUrl = "";
-            
-            if (canvas) {
-                imageUrl = canvas.toDataURL("image/png");
-            } else if (img && img.src) {
-                imageUrl = img.src;
+            // Fallback jika hanya img (tidak ada canvas) – buat canvas dari img
+            if (!sourceCanvas && qrImg) {
+                sourceCanvas = document.createElement('canvas');
+                sourceCanvas.width = qrImg.naturalWidth || 500;
+                sourceCanvas.height = qrImg.naturalHeight || 500;
+                const ctx = sourceCanvas.getContext('2d');
+                ctx.drawImage(qrImg, 0, 0);
             }
-
-            if (imageUrl) {
-                const link = document.createElement('a');
-                link.href = imageUrl;
-                link.download = `QR_Asep_Awaludin_${new Date().getTime()}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showToast("Mulai mengunduh QR Code...");
-            } else {
+            
+            if (!sourceCanvas) {
                 showToast("Gagal menyiapkan gambar. Coba buat ulang.", true);
+                return;
             }
+            
+            // Buat canvas baru dengan margin putih (quiet zone)
+            const padding = 40; // Jarak putih di sekeliling QR
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = sourceCanvas.width + (padding * 2);
+            finalCanvas.height = sourceCanvas.height + (padding * 2);
+            
+            const finalCtx = finalCanvas.getContext('2d');
+            // Isi latar belakang putih
+            finalCtx.fillStyle = "#ffffff";
+            finalCtx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+            
+            // Gambar QR di tengah
+            finalCtx.drawImage(sourceCanvas, padding, padding);
+            
+            // Unduh canvas akhir
+            const imageUrl = finalCanvas.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = `QR_Asep_Awaludin_${new Date().getTime()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Mulai mengunduh QR Code...");
         });
     </script>
-
 </body>
 </html>
