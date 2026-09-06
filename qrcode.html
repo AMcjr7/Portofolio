@@ -52,7 +52,6 @@
             gap: 20px;
         }
 
-        /* Layout 2 kolom untuk layar ≥ 768px */
         @media (min-width: 768px) {
             .portfolio-card {
                 padding: 32px;
@@ -81,7 +80,6 @@
             }
         }
 
-        /* Penyesuaian untuk HP */
         @media (max-width: 480px) {
             body { padding: 10px; }
             .portfolio-card { padding: 16px; border-radius: 14px; }
@@ -433,6 +431,7 @@
 
         let currentTab = 'tab-url';
         let qrInstance = null;
+        let qrCanvas = null; // Menyimpan referensi canvas QR
 
         function showToast(message, isError = false) {
             const toast = document.createElement('div');
@@ -501,6 +500,7 @@
                 qrcodeDiv.innerHTML = "";
                 downloadBtn.classList.add('hidden');
                 downloadHint.classList.add('hidden');
+                qrCanvas = null; // Reset
 
                 try {
                     qrInstance = new QRCode(qrcodeDiv, {
@@ -511,6 +511,8 @@
                         colorLight: bgColor,
                         correctLevel: QRCode.CorrectLevel.H
                     });
+                    // Simpan referensi canvas setelah QR dibuat
+                    qrCanvas = qrcodeDiv.querySelector('canvas');
                 } catch (err) {
                     console.error("Error creating QR:", err);
                     placeholder.classList.remove('hidden');
@@ -533,29 +535,25 @@
         }
 
         function drawLogoToCanvas(file, bgColor) {
-            const canvas = qrcodeDiv.querySelector('canvas');
-            if (!canvas) {
+            if (!qrCanvas) {
                 showDownloadOptions();
                 return;
             }
 
-            const ctx = canvas.getContext('2d');
+            const ctx = qrCanvas.getContext('2d');
             const img = new Image();
             
             img.onload = function() {
-                const center = canvas.width / 2;
-                const logoSize = canvas.width * 0.25;
+                const center = qrCanvas.width / 2;
+                const logoSize = qrCanvas.width * 0.25;
                 const padding = 6;
                 const logoPos = center - (logoSize / 2);
 
+                // Gambar kotak background logo
                 ctx.fillStyle = bgColor;
                 ctx.fillRect(logoPos - padding, logoPos - padding, logoSize + (padding * 2), logoSize + (padding * 2));
+                // Gambar logo
                 ctx.drawImage(img, logoPos, logoPos, logoSize, logoSize);
-
-                const qrImg = qrcodeDiv.querySelector('img');
-                if (qrImg) {
-                    qrImg.src = canvas.toDataURL("image/png");
-                }
 
                 URL.revokeObjectURL(img.src);
                 showDownloadOptions();
@@ -577,39 +575,27 @@
         generateBtn.addEventListener('click', generateQR);
 
         downloadBtn.addEventListener('click', function () {
-            // Ambil canvas QR yang sudah jadi (mungkin sudah berisi logo)
-            let sourceCanvas = qrcodeDiv.querySelector('canvas');
-            const qrImg = qrcodeDiv.querySelector('img');
-            
-            // Fallback jika hanya img (tidak ada canvas) – buat canvas dari img
-            if (!sourceCanvas && qrImg) {
-                sourceCanvas = document.createElement('canvas');
-                sourceCanvas.width = qrImg.naturalWidth || 500;
-                sourceCanvas.height = qrImg.naturalHeight || 500;
-                const ctx = sourceCanvas.getContext('2d');
-                ctx.drawImage(qrImg, 0, 0);
-            }
-            
-            if (!sourceCanvas) {
+            // Gunakan canvas QR yang tersimpan
+            if (!qrCanvas) {
                 showToast("Gagal menyiapkan gambar. Coba buat ulang.", true);
                 return;
             }
-            
-            // Buat canvas baru dengan margin putih (quiet zone)
+
+            // Buat canvas final dengan padding putih (quiet zone)
             const padding = 40; // Jarak putih di sekeliling QR
             const finalCanvas = document.createElement('canvas');
-            finalCanvas.width = sourceCanvas.width + (padding * 2);
-            finalCanvas.height = sourceCanvas.height + (padding * 2);
+            finalCanvas.width = qrCanvas.width + (padding * 2);
+            finalCanvas.height = qrCanvas.height + (padding * 2);
             
             const finalCtx = finalCanvas.getContext('2d');
-            // Isi latar belakang putih
+            // Isi latar putih
             finalCtx.fillStyle = "#ffffff";
             finalCtx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
             
-            // Gambar QR di tengah
-            finalCtx.drawImage(sourceCanvas, padding, padding);
+            // Gambar QR (dengan logo jika ada) ke tengah
+            finalCtx.drawImage(qrCanvas, padding, padding);
             
-            // Unduh canvas akhir
+            // Unduh
             const imageUrl = finalCanvas.toDataURL("image/png");
             const link = document.createElement('a');
             link.href = imageUrl;
