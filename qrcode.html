@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generator QR Code - Asep Awaludin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-main: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8, #818cf8);
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .portfolio-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        .app-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Layout 2 kolom untuk layar ≥ 768px (laptop/PC) */
+        @media (min-width: 768px) {
+            .portfolio-card {
+                padding: 32px;
+            }
+            .app-layout {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            .form-section {
+                flex: 1;
+                min-width: 0;
+                padding-right: 30px;
+                border-right: 1px solid var(--card-border);
+            }
+            .preview-section {
+                width: 320px;
+                flex-shrink: 0;
+                position: sticky;
+                top: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .qr-header {
+                text-align: left;
+            }
+        }
+
+        /* Penyesuaian untuk layar sangat kecil (HP) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .portfolio-card {
+                padding: 16px;
+                border-radius: 14px;
+            }
+            .qr-header h2 {
+                font-size: 1.3rem;
+            }
+            .tabs {
+                gap: 6px;
+            }
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .btn {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            .color-settings {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .preview-section {
+                position: static; /* Nonaktifkan sticky di mobile */
+            }
+            .qr-box-wrapper {
+                padding: 15px;
+            }
+        }
+
+        .qr-header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .qr-header { text-align: left; }
+        }
+
+        .qr-header h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            /* Fallback warna solid */
+            color: var(--accent-main);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .qr-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 8px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none; /* Sembunyikan scrollbar Chrome/Safari/Edge */
+        }
+
+        .tab-btn {
+            flex: 0 0 auto;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--accent-main);
+            color: var(--accent-main);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active { display: block; }
+
+        .input-group { margin-bottom: 16px; }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        input[type="text"], input[type="email"], select, input[type="file"] {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            border-color: var(--accent-main);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        input[type="file"] { padding: 10px; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); }
+        input[type="file"]::file-selector-button {
+            background: var(--card-border);
+            color: var(--text-main);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        input[type="file"]::file-selector-button:hover { background: rgba(255, 255, 255, 0.15); }
+
+        .color-settings {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        @media (max-width: 480px) {
+            .color-settings {
+                grid-template-columns: 1fr; /* Satu kolom di HP */
+            }
+        }
+
+        .color-picker { display: flex; align-items: center; gap: 10px; }
+
+        input[type="color"] {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid var(--card-border); border-radius: 8px; }
+
+        .btn {
+            background: var(--accent-gradient);
+            color: #0b0f19;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+        .btn:hover { opacity: 0.9; box-shadow: 0 6px 16px rgba(56, 189, 248, 0.3); }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-download {
+            background: transparent;
+            color: var(--accent-main);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: none;
+            margin-top: 15px;
+        }
+        .btn-download:hover { background: rgba(56, 189, 248, 0.1); }
+
+        .qr-box-wrapper {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            position: relative;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        #qrcode img, #qrcode canvas { max-width: 100%; max-height: 100%; border-radius: 4px; }
+
+        .placeholder-text {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-align: center;
+            position: absolute;
+        }
+
+        .footer-copyright {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-main);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { border-left-color: var(--danger-color); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="portfolio-card">
+        <div class="app-layout">
+            
+            <!-- Kolom Kiri: Formulir & Pengaturan -->
+            <div class="form-section">
+                <div class="qr-header">
+                    <h2>QR Code Generator</h2>
+                    <p>Buat kode QR kustom gratis, selamanya tanpa iklan.</p>
+                </div>
+                
+                <!-- Menu Tab -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-target="tab-url">Tautan / URL</button>
+                    <button class="tab-btn" data-target="tab-wa">WhatsApp</button>
+                    <button class="tab-btn" data-target="tab-wifi">Wi-Fi</button>
+                    <button class="tab-btn" data-target="tab-email">Email</button>
+                </div>
+
+                <!-- Konten Tab URL -->
+                <div class="tab-content active" id="tab-url">
+                    <div class="input-group">
+                        <label>Masukkan Tautan (Website / Profil Medsos)</label>
+                        <input type="text" id="input-url" placeholder="Contoh: https://asepawaludin.com">
+                    </div>
+                </div>
+
+                <!-- Konten Tab WhatsApp -->
+                <div class="tab-content" id="tab-wa">
+                    <div class="input-group">
+                        <label>Nomor WhatsApp (Gunakan kode negara, ex: 62)</label>
+                        <input type="text" id="input-wa-number" placeholder="628123456789">
+                    </div>
+                    <div class="input-group">
+                        <label>Pesan Otomatis (Opsional)</label>
+                        <input type="text" id="input-wa-msg" placeholder="Halo, saya ingin bertanya tentang layanan IT...">
+                    </div>
+                </div>
+
+                <!-- Konten Tab Wi-Fi -->
+                <div class="tab-content" id="tab-wifi">
+                    <div class="input-group">
+                        <label>Nama Jaringan (SSID)</label>
+                        <input type="text" id="input-wifi-ssid" placeholder="Nama WiFi Anda">
+                    </div>
+                    <div class="input-group">
+                        <label>Kata Sandi (Password)</label>
+                        <input type="text" id="input-wifi-pass" placeholder="Rahasia123">
+                    </div>
+                    <div class="input-group">
+                        <label>Tipe Keamanan</label>
+                        <select id="input-wifi-type">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Tanpa Sandi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Konten Tab Email -->
+                <div class="tab-content" id="tab-email">
+                    <div class="input-group">
+                        <label>Alamat Email Tujuan</label>
+                        <input type="email" id="input-email-to" placeholder="email@domain.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Subjek</label>
+                        <input type="text" id="input-email-sub" placeholder="Subjek Pesan">
+                    </div>
+                    <div class="input-group">
+                        <label>Isi Pesan</label>
+                        <input type="text" id="input-email-body" placeholder="Tuliskan pesan Anda di sini...">
+                    </div>
+                </div>
+
+                <div class="color-settings">
+                    <div class="color-picker">
+                        <input type="color" id="color-qr" value="#000000">
+                        <label style="margin:0;">Warna QR</label>
+                    </div>
+                    <div class="color-picker">
+                        <input type="color" id="color-bg" value="#ffffff">
+                        <label style="margin:0;">Warna Latar</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Sisipkan Logo (Opsional)</label>
+                    <input type="file" id="input-logo" accept="image/png, image/jpeg, image/webp">
+                </div>
+
+                <button class="btn" id="generate-btn">Buat QR Code Sekarang</button>
+            </div>
+
+            <!-- Kolom Kanan: Area Pratinjau & Tombol Unduh -->
+            <div class="preview-section">
+                <div class="qr-box-wrapper" id="qr-wrapper">
+                    <span class="placeholder-text" id="placeholder">Pratinjau QR Code<br>Akan Muncul Di Sini</span>
+                    <div id="qrcode"></div>
+                </div>
+                
+                <button class="btn btn-download hidden" id="download-btn">Simpan ke Perangkat</button>
+                <p id="download-hint" class="hidden" style="font-size: 0.75rem; color: #64748b; text-align: center; margin-top: 8px;">
+                    *Jika tombol gagal merespons, klik tahan pada gambar QR untuk menyimpannya manual.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="footer-copyright">
+            &copy; 2026 Hak Cipta Asep Awaludin. Dibuat dengan presisi.
+        </div>
+    </div>
+
+    <script>
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const generateBtn = document.getElementById('generate-btn');
+        const qrcodeDiv = document.getElementById('qrcode');
+        const placeholder = document.getElementById('placeholder');
+        const downloadBtn = document.getElementById('download-btn');
+        const downloadHint = document.getElementById('download-hint');
+        const logoInput = document.getElementById('input-logo');
+        const toastContainer = document.getElementById('toast-container');
+
+        let currentTab = 'tab-url';
+        let qrInstance = null;
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                const targetId = btn.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+                currentTab = targetId;
+            });
+        });
+
+        function getQRData() {
+            let dataString = "";
+
+            if (currentTab === 'tab-url') {
+                const url = document.getElementById('input-url').value.trim();
+                if (!url) throw new Error("Tautan/URL tidak boleh kosong!");
+                dataString = url;
+            } 
+            else if (currentTab === 'tab-wa') {
+                let number = document.getElementById('input-wa-number').value.trim();
+                const msg = document.getElementById('input-wa-msg').value.trim();
+                if (!number) throw new Error("Nomor WhatsApp wajib diisi!");
+                number = number.replace(/\D/g, '');
+                dataString = `https://wa.me/${number}`;
+                if (msg) dataString += `?text=${encodeURIComponent(msg)}`;
+            }
+            else if (currentTab === 'tab-wifi') {
+                const ssid = document.getElementById('input-wifi-ssid').value.trim();
+                const pass = document.getElementById('input-wifi-pass').value;
+                const type = document.getElementById('input-wifi-type').value;
+                if (!ssid) throw new Error("Nama Jaringan (SSID) tidak boleh kosong!");
+                dataString = `WIFI:T:${type};S:${ssid};P:${pass};;`;
+            }
+            else if (currentTab === 'tab-email') {
+                const to = document.getElementById('input-email-to').value.trim();
+                const sub = document.getElementById('input-email-sub').value.trim();
+                const body = document.getElementById('input-email-body').value.trim();
+                if (!to) throw new Error("Alamat Email tujuan wajib diisi!");
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(to)) throw new Error("Format email tidak valid!");
+                dataString = `mailto:${to}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+            }
+
+            return dataString;
+        }
+
+        function generateQR() {
+            try {
+                const qrText = getQRData();
+                const qrColor = document.getElementById('color-qr').value;
+                const bgColor = document.getElementById('color-bg').value;
+
+                placeholder.classList.add('hidden');
+                qrcodeDiv.innerHTML = "";
+                downloadBtn.classList.add('hidden');
+                downloadHint.classList.add('hidden');
+
+                try {
+                    qrInstance = new QRCode(qrcodeDiv, {
+                        text: qrText,
+                        width: 250,
+                        height: 250,
+                        colorDark: qrColor,
+                        colorLight: bgColor,
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                } catch (err) {
+                    console.error("Error creating QR:", err);
+                    placeholder.classList.remove('hidden');
+                    qrcodeDiv.innerHTML = "";
+                    throw new Error("Gagal membuat QR Code. Coba lagi dengan teks yang lebih pendek.");
+                }
+
+                const file = logoInput.files[0];
+                if (file) {
+                    setTimeout(() => drawLogoToCanvas(file, bgColor), 50);
+                } else {
+                    setTimeout(showDownloadOptions, 50);
+                }
+
+                showToast("Berhasil membuat QR Code!");
+
+            } catch (error) {
+                showToast(error.message, true);
+            }
+        }
+
+        function drawLogoToCanvas(file, bgColor) {
+            const canvas = qrcodeDiv.querySelector('canvas');
+            if (!canvas) {
+                showDownloadOptions();
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                const center = canvas.width / 2;
+                const logoSize = canvas.width * 0.25;
+                const padding = 6;
+                const logoPos = center - (logoSize / 2);
+
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(logoPos - padding, logoPos - padding, logoSize + (padding * 2), logoSize + (padding * 2));
+
+                ctx.drawImage(img, logoPos, logoPos, logoSize, logoSize);
+
+                const qrImg = qrcodeDiv.querySelector('img');
+                if (qrImg) {
+                    qrImg.src = canvas.toDataURL("image/png");
+                }
+
+                URL.revokeObjectURL(img.src);
+                showDownloadOptions();
+            };
+            
+            img.onerror = function() {
+                URL.revokeObjectURL(img.src);
+                showDownloadOptions();
+            };
+            
+            img.src = URL.createObjectURL(file);
+        }
+
+        function showDownloadOptions() {
+            downloadBtn.classList.remove('hidden');
+            downloadHint.classList.remove('hidden');
+        }
+
+        generateBtn.addEventListener('click', generateQR);
+
+        downloadBtn.addEventListener('click', function () {
+            const canvas = qrcodeDiv.querySelector('canvas');
+            const img = qrcodeDiv.querySelector('img');
+            
+            let imageUrl = "";
+            
+            if (canvas) {
+                imageUrl = canvas.toDataURL("image/png");
+            } else if (img && img.src) {
+                imageUrl = img.src;
+            }
+
+            if (imageUrl) {
+                const link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = `QR_Asep_Awaludin_${new Date().getTime()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast("Mulai mengunduh QR Code...");
+            } else {
+                showToast("Gagal menyiapkan gambar. Coba buat ulang.", true);
+            }
+        });
+    </script>
+
+</body>
+</html>
